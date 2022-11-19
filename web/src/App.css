@@ -1,38 +1,351 @@
-.App {
-  text-align: center;
+* {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+    background-color: #f7f7f7 !important;
+    font-family: -apple-system, BlinkMacSystemFont,
+        Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
+        Liberation Sans, sans-serif, Apple Color Emoji,
+        Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.nav-2 {
+    background-color: #002847 !important;
+    color: #fff;
+    box-shadow: lightgray 0px 3px 8px !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.navBtn {
+    border: none;
+    font-size: large;
+    font-weight: 500;
+    background: none;
+    color: #fff;
 }
 
-.App-link {
-  color: #61dafb;
+.haeding-nav {
+    color: #fff;
+    padding-top: 15px;
+    min-width: 300px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn-container {
+    width: 96vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.child2 {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-container-out {
+    width: 98vw;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.child3 {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-signup {
+    background-color: #002847 !important;
+    letter-spacing: 2px !important;
+}
+
+.line {
+    text-decoration: none !important;
+}
+
+.main-otp {
+    width: 100vw;
+    height: 50vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #002847;
+    color: #fff;
+
+
+}
+
+.main-otp2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    box-shadow: lightgray 0px 1px 2px 0px, lightgray 0px 2px 6px 2px;
+}
+
+.send_btn {
+    padding: 5px 20px 5px 20px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.otp-inp {
+    margin-top: 20px;
+}
+
+.otp3 {
+    padding: 10px;
+}
+
+.otp-btn {
+    text-align: center;
+    padding-top: 20px;
+}
+
+.css-1999axt-MuiAvatar-root {
+    background-color: #002847 !important;
+}
+
+.form-control {
+    width: 40% !important;
+    border-radius: 20px !important;
+}
+
+/* /////////////////// create events////////////////// */
+
+.formMain {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 80vh;
+}
+
+.eventsForm {
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 20px;
+    border: 1px solid lightgray;
+
+}
+
+.eventsForm:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+
+.addEvent_btn {
+    color: black !important;
+    border-color: #002847 !important;
+    border-radius: 28px !important;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 13px 30px 13px 30px;
+    font-size: 20px;
+    line-height: 1.5;
+    letter-spacing: 3px;
+    border-radius: 0.25rem;
+    font-weight: 500;
+    font-style: italic;
+    margin-top: 20px;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+}
+
+.addEvent_btn:hover {
+    background-color: #002847;
+    color: #fff !important;
+
+}
+
+#title,
+#select,
+#description,
+#address,
+#startDate,
+#endDate {
+    width: 20vw;
+    border: none;
+    margin: 5px;
+    border-bottom: 2px solid #002847;
+    font-size: larger;
+    padding: 5px;
+    outline: none;
+    background-color: #f7f7f7;
+}
+
+.navBtn23 {
+    min-width: 80px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    margin-top: 3px;
+}
+
+.headingg {
+    font-style: italic;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.tit-div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.create_hadding {
+    text-align: center;
+    font-style: italic;
+    margin-top: 2rem;
+    letter-spacing: 3px;
+}
+
+
+/* ///////events////// */
+
+.eventMain {
+    padding: 20px;
+    background-color: #002847;
+    color: #fff;
+}
+
+.eventsMainDiv {
+    box-shadow: lightgray 0px 6px 24px 0px, lightgray 0px 0px 0px 1px;
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.titleDiv {
+    display: flex;
+    padding: 6px;
+    flex-direction: column;
+
+}
+
+.dec {
+    padding: 2px;
+    width: 80%;
+}
+
+.titalMainDiv {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+}
+
+.titles {
+    letter-spacing: 3px;
+
+}
+
+.select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: lightgray;
+    color: black;
+    font-weight: 400;
+
+}
+
+.addDiv {
+    display: flex;
+    padding: 6px;
+    align-items: center;
+}
+
+.add {
+    padding: 6px;
+    width: 80%;
+    margin-top: 10px;
+}
+
+.dateMain {
+    display: flex;
+    padding: 6px;
+    justify-content: space-between;
+}
+
+.dateDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.endDiv {
+    width: 80%;
+}
+
+
+.navbar-toggler:hover {
+    color: #f7f7f7;
+    background-color: #f7f7f7;
+
+}
+
+.main {
+    text-align: center;
+}
+
+#select1 {
+    border-bottom: 1px solid lightgray;
+    border-radius: 8px;
+    background-color: #002847;
+    color: #fff;
+}
+
+.EventDelete {
+    padding: 5px 20px 5px 20px;
+    border: 1px solid lightgray;
+    background-color: #002847;
+    color: #fff;
+    border-radius: 8px;
+}
+
+.EventEdit {
+    padding: 5px 20px 5px 20px;
+    border: 1px solid lightgray;
+    background-color: #002847;
+    color: #fff;
+    border-radius: 8px;
+    margin-left: 10px;
+}
+
+.EventDelete:hover {
+    background-color: #fff;
+    color: #002847;
+    cursor: pointer;
+}
+
+.EventEdit:hover {
+    background-color: #fff;
+    color: #002847;
+    cursor: pointer;
+}
+
+.navbar-toggler-icon {
+
+    background-color: #fff !important;
+
 }

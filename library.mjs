@@ -68,6 +68,25 @@ app.use(function (req, res, next) {
     });
 }),
 
+app.get("/profile", async (req, res) => {
+
+
+    try {
+        let user = await userModel.findOne({ _id: req.body.token_id }).exec();
+        res.send(user);
+
+    } catch (error) {
+        res.status(500).send({ message: "error getting users" });
+    }
+})
+
+app.use((req, res) => {
+    res.status(404).send('404 not found')
+})
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
+
 
 
 
