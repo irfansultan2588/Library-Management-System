@@ -1,0 +1,54 @@
+.SettingMain {
+  margin-top: 3rem;
+  margin: 20px;
+}
+.main-setting {
+  width: 81vw;
+  border: 1px solid lightgray;
+}
+.edit-setting-hadding {
+  background-color: #f7f7f7;
+  padding: 5px;
+}
+.settingInput {
+  width: 100%;
+  padding-left: 10px;
+  margin-top: 15px;
+}
+.settingField {
+  width: 99%;
+  padding: 5px;
+  border: 1px solid lightgray;
+}
+.setting-haed {
+  width: 81vw;
+  background-color: #f7f7f7f7;
+  padding: 10px;
+  margin-bottom: 20px;
+  color: gray;
+}
+.cont-email {
+  display: flex;
+}
+.settingField2 {
+  width: 98%;
+  padding: 5px;
+  border: 1px solid lightgray;
+}
+.profilebtnDiv {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.profileUpdate {
+  padding: 5px 10px 5px 10px;
+  border: none;
+  margin-bottom: 15px;
+  background-color: #24a0ed;
+  color: #fff;
+}
+.settinngInput {
+  margin-left: 20px;
+  width: 100%;
+  padding-left: 10px;
+  margin-top: 15px;
+}

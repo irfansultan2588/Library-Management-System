@@ -1,0 +1,44 @@
+.hading-Dash {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.rightside {
+  width: 100vw;
+}
+.sideber {
+  width: 28% !important;
+  max-height: 863.5px;
+}
+.bPQHAq {
+  border: none !important;
+  margin-right: 0rem !important;
+}
+.bPQHAq .head-div {
+  display: flex;
+  justify-content: flex-start !important;
+}
+.MuiToolbar-root {
+  background-color: #333 !important;
+}
+.icons {
+  margin-right: 20px;
+}
+
+.row {
+  width: 83vw;
+}
+.col2 {
+  max-height: 30%;
+  background-color: #24a0ed;
+  text-align: center;
+  padding: 20px;
+  color: #fff;
+  margin: 30px;
+}
+.css-vj1n65-MuiGrid-root {
+  width: 100%;
+  margin: 30px;
+}
+.library-text {
+  margin-right: 2rem;
+}

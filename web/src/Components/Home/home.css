@@ -11,7 +11,6 @@
 }
 #main {
   margin-top: 20px !important;
-  /* border: 1px solid black; */
 }
 .col-admin {
   background-color: black;
@@ -27,6 +26,11 @@
   border-radius: 8px;
   border: 1px solid lightgray;
 }
+.btn-admin:hover {
+  cursor: pointer;
+  background-color: #fff;
+  color: black;
+}
 .col-user {
   background-color: lightgray;
   color: black;
@@ -35,10 +39,30 @@
 }
 .btn-user {
   padding: 7px 20px 7px 20px;
-  background-color: #f7f7f7f7;
-  border: 1px solid lightgray;
-  color: black;
+  background-color: #f7f7f7f7 !important;
+  border: 1px solid gray !important;
+  color: gray !important;
   border: 1px solid lightgray;
   border-radius: 8px;
   margin-right: 10px;
+}
+.btn-user:hover {
+  background-color: gray !important;
+  color: #fff !important;
+}
+.btn-user2 {
+  padding: 7px 20px 7px 20px;
+  background-color: #f7f7f7f7 !important;
+  border: 1px solid #24a0ed !important;
+  color: #24a0ed !important;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+a {
+  text-decoration: none !important;
+}
+.btn-user2:hover {
+  background-color: #24a0ed !important;
+  color: #fff !important;
 }

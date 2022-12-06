@@ -1,0 +1,12 @@
+.boder {
+  border: 1px solid lightgray !important;
+  margin-top: 5rem;
+  padding: 20px;
+}
+.hading-signup {
+  border: 1px solid lightgray;
+  padding: 10px;
+}
+.main {
+  background-color: lightgray;
+}

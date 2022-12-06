@@ -1,0 +1,42 @@
+.main-otp {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7f7;
+  color: black;
+}
+.main-otp2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-shadow: gray 0px 1px 2px 0px, gray 0px 2px 6px 2px;
+}
+
+.send_btn {
+  padding: 5px 20px 5px 20px;
+  background-color: #fff;
+  border: 1px solid #24a0ed;
+  color: #24a0ed;
+  border-radius: 8px;
+}
+.send_btn:hover {
+  background-color: #24a0ed;
+  color: #fff;
+}
+
+.otp-inp {
+  margin-top: 20px;
+}
+
+.otp3 {
+  padding: 10px;
+}
+
+.otp-btn {
+  text-align: center;
+  padding-top: 20px;
+}
