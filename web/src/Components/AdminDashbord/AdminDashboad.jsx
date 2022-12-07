@@ -17,6 +17,9 @@ import "./adminDashboard.css";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import { GlobalContext } from "../../Context";
+import { useContext } from "react";
 
 import {
   CDBSidebar,
@@ -29,8 +32,10 @@ import { NavLink } from "react-router-dom";
 import CommonCard from "../homecard/CommonCard";
 import Profile from "../profile/Profile";
 import Setting from "../Setting/Setting";
+import Logout from "../LogOut/Logout";
 
 const AdminDashboad = () => {
+  let { state, dispatch } = useContext(GlobalContext);
   let param = useParams();
 
   const [auth, setAuth] = React.useState(true);
@@ -49,10 +54,23 @@ const AdminDashboad = () => {
     setAuth(null);
   };
 
-  const handleCloseLogout = () => {
-    setAnchorEl(null);
-  };
+  // const logouthandler = async () => {
+  //   try {
+  //     let response = await axios.post(
+  //       `${state.baseUrl}/logout`,
+  //       {},
 
+  //       {
+  //         withCredentials: true,
+  //       }
+  //     );
+  //     console.log("response", response.data);
+
+  //     dispatch({ type: "USER_LOGOUT" });
+  //   } catch (e) {
+  //     console.log("Error in api", e);
+  //   }
+  // };
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -69,6 +87,8 @@ const AdminDashboad = () => {
         return <Profile />;
       case "setting":
         return <Setting />;
+      case "logout":
+        return <CommonCard />;
       default:
         return "Page Not Found";
     }
@@ -136,7 +156,9 @@ const AdminDashboad = () => {
                   <MenuItem onClick={() => navigetTo("/dashboard/setting")}>
                     Setting{" "}
                   </MenuItem>
-                  <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
+                  <MenuItem onClick={() => navigetTo("/dashboard/home")}>
+                    Logout
+                  </MenuItem>
                 </Menu>
               </div>
             )}
@@ -146,7 +168,11 @@ const AdminDashboad = () => {
 
       <div
         className="sideber"
-        style={{ display: "flex", height: "100vh", overflow: "scroll initial" }}
+        style={{
+          display: "flex",
+          height: "100vh",
+          overflow: "scroll initial",
+        }}
       >
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarContent className="sidebar-content">

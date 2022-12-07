@@ -34,8 +34,56 @@ const userSchema = new mongoose.Schema({
   otp: { type: String },
   createdOn: { type: Date, default: Date.now },
 });
-
 const userModel = mongoose.model("user", userSchema);
+
+const librarySchema = new mongoose.Schema({
+  libraryName: { type: String, required: true },
+  address: { type: String, required: true },
+  contactNo: { type: Number, required: true },
+  emailaddress: { type: String, required: true },
+  uid: { type: String },
+  bookReturnDayLimit: { type: Number, required: true },
+  bookLateReturnOneDayFine: { type: Number, required: true },
+  perUserBookIssueLimit: { type: Number, required: true },
+  createdOn: { type: Date, default: Date.now },
+});
+const libraryModel = mongoose.model("library", librarySchema);
+///////////library setting/////////////
+app.post("/setting", (req, res) => {
+  let body = req.body;
+
+  libraryModel.findOne({ email: body.email }, (err, library) => {
+    if (!err) {
+      libraryModel
+        .create({
+          libraryName: body.libraryName,
+          address: body.address,
+          contactNo: body.contactNo,
+          emailaddress: body.emailaddress.toLowerCase(),
+          bookReturnDayLimit: body.bookReturnDayLimit,
+          bookLateReturnOneDayFine: body.bookLateReturnOneDayFine,
+          perUserBookIssueLimit: body.perUserBookIssueLimit,
+          uid: body.uid,
+        })
+        .then((resss) => {
+          res.status(200).send({ message: "library is created" });
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          res.status(500).send({ message: "internal server error" });
+        });
+    }
+  });
+});
+///////////library get setting/////////////
+app.get("/settings", async (req, res) => {
+  try {
+    let data = await libraryModel.findOne({ _id: req?.body?.data }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting users" });
+  }
+});
 ///////////user Signup////////////////
 app.post("/signup", async (req, res) => {
   let body = req.body;

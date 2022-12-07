@@ -35,6 +35,12 @@
   padding: 5px;
   border: 1px solid lightgray;
 }
+
+.settingFieldlast {
+  width: 48.5%;
+  padding: 5px;
+  border: 1px solid lightgray;
+}
 .profilebtnDiv {
   margin-left: 10px;
   margin-top: 10px;

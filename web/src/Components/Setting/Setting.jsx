@@ -5,6 +5,11 @@ import { GlobalContext } from "../../Context";
 import axios from "axios";
 import Person2SharpIcon from "@mui/icons-material/Person2Sharp";
 import "./setting.css";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { toast } from "react-toastify";
 
 const currencies = [
   {
@@ -1040,9 +1045,113 @@ const timeies = [
   },
 ];
 
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Irfan Library Management Website ❤️
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
 const Setting = () => {
   let { state, dispatch } = useContext(GlobalContext);
+  const [toggleRefresh, setToggleRefresh] = useState(true);
+  const [uid, setuid] = useState(state.user.data._id);
+  let [seetings, setseetings] = useState([]);
 
+  useEffect(() => {
+    const getSetting = async () => {
+      try {
+        let response = await axios({
+          url: `${state.baseUrl}/settings`,
+          method: "get",
+          withCredentials: true,
+        });
+        if (response.status === 200) {
+          console.log("response======: ", response.data);
+          setseetings(response?.data);
+        } else {
+          console.log("error in api call");
+        }
+      } catch (e) {
+        console.log("Error in api", e);
+      }
+    };
+    getSetting();
+  }, []);
+
+  const formik = useFormik({
+    initialValues: {
+      libraryName: "",
+      address: "",
+      contactNo: "",
+      emailaddress: "",
+      bookReturnDayLimit: "",
+      bookLateReturnOneDayFine: "",
+      perUserBookIssueLimit: "",
+    },
+    validationSchema: yup.object({
+      libraryName: yup
+        .string("Enter your libraryName")
+        .required("libraryName is required"),
+      address: yup.string("Enter your address").required("address is required"),
+      contactNo: yup.string("Enter your number").required("number is required"),
+      emailaddress: yup
+        .string("Enter your email")
+        .email("Enter a valid email")
+        .required("Email is required"),
+      bookReturnDayLimit: yup
+        .string("Enter your BookReturnDayLimit")
+        .required("BookReturnDayLimit is required"),
+      bookLateReturnOneDayFine: yup
+        .string("Enter your BookLateReturnOneDayFine")
+        .required("BookLateReturnOneDayFine is required"),
+      perUserBookIssueLimit: yup
+        .string("Enter your PerUserBookIssueLimit")
+        .required("PerUserBookIssueLimit is required"),
+    }),
+
+    onSubmit: async (values, { resetForm }) => {
+      axios({
+        method: "post",
+        url: `${state.baseUrl}/setting`,
+        data: {
+          libraryName: values.libraryName,
+          address: values.address,
+          contactNo: values.contactNo,
+          emailaddress: values.emailaddress,
+          bookReturnDayLimit: values.bookReturnDayLimit,
+          bookLateReturnOneDayFine: values.bookLateReturnOneDayFine,
+          perUserBookIssueLimit: values.perUserBookIssueLimit,
+          uid,
+        },
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => {
+          toast.success("Settings Updated", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          setToggleRefresh(!toggleRefresh);
+          resetForm();
+        })
+        .catch((err) => {
+          toast.error("Settings Updated Error", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          console.log("ERROR", err);
+        });
+    },
+  });
   return (
     <div>
       {state?.user === null ? (
@@ -1064,97 +1173,159 @@ const Setting = () => {
                 {" "}
                 <Person2SharpIcon /> Library Setting
               </h5>
-              <div className="settingInput">
-                <h5>Library Name</h5>
-                <input
-                  className="settingField"
-                  type="text"
-                  //   value={}
-                  //   onChange={(event) => setemail(event.target.value)}
-                />
-              </div>
-              <div className="settingInput">
-                <h5>Address</h5>
-                <input
-                  className="settingField"
-                  type="text"
-                  //   value={}
-                  //   onChange={(event) => setpassword(event.target.value)}
-                />
-              </div>
-              <div className="cont-email">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  formik.handleSubmit();
+                }}
+              >
                 <div className="settingInput">
-                  <h5>Contact Number </h5>
+                  <h5>Library Name</h5>
                   <input
-                    className="settingField2"
-                    type="number"
-                    //   value={}
-                    //   onChange={(event) => setpassword(event.target.value)}
+                    className="settingField"
+                    type="text"
+                    name="libraryName"
+                    value={formik.values.libraryName}
+                    onChange={formik.handleChange}
                   />
                 </div>
+                {formik.touched.libraryName && formik.errors.libraryName ? (
+                  <div className="errorMessage">
+                    {formik.errors.libraryName}
+                  </div>
+                ) : null}
                 <div className="settingInput">
-                  <h5>Email Address </h5>
+                  <h5>Address</h5>
                   <input
-                    className="settingField2"
-                    type="email"
-                    //   value={}
-                    //   onChange={(event) => setpassword(event.target.value)}
+                    className="settingField"
+                    type="text"
+                    name="address"
+                    value={formik.values.address}
+                    onChange={formik.handleChange}
                   />
                 </div>
-              </div>
-              <div className="cont-email">
-                <div className="settingInput">
-                  <h5>Book Return Day Limit</h5>
-                  <input
-                    className="settingField2"
-                    type="number"
-                    //   value={}
-                    //   onChange={(event) => setpassword(event.target.value)}
-                  />
+                {formik.touched.address && formik.errors.address ? (
+                  <div className="errorMessage">{formik.errors.address}</div>
+                ) : null}
+                <div className="cont-email">
+                  <div className="settingInput">
+                    <h5>Contact Number </h5>
+                    <input
+                      className="settingField2"
+                      type="number"
+                      name="contactNo"
+                      value={formik.values.contactNo}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                  {formik.touched.contactNo && formik.errors.contactNo ? (
+                    <div className="errorMessage">
+                      {formik.errors.contactNo}
+                    </div>
+                  ) : null}
+                  <div className="settingInput">
+                    <h5>Email Address </h5>
+                    <input
+                      className="settingField2"
+                      type="email"
+                      name="emailaddress"
+                      value={formik.values.emailaddress}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                  {formik.touched.emailaddress && formik.errors.emailaddress ? (
+                    <div className="errorMessage">
+                      {formik.errors.emailaddress}
+                    </div>
+                  ) : null}
                 </div>
-                <div className="settingInput">
-                  <h5>Book Late Return One Day Fine </h5>
-                  <input
-                    className="settingField2"
-                    type="number"
-                    //   value={}
-                    //   onChange={(event) => setpassword(event.target.value)}
-                  />
+                <div className="cont-email">
+                  <div className="settingInput">
+                    <h5>Book Return Day Limit</h5>
+                    <input
+                      className="settingField2"
+                      type="number"
+                      name="bookReturnDayLimit"
+                      value={formik.values.bookReturnDayLimit}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                  {formik.touched.bookReturnDayLimit &&
+                  formik.errors.bookReturnDayLimit ? (
+                    <div className="errorMessage">
+                      {formik.errors.bookReturnDayLimit}
+                    </div>
+                  ) : null}
+                  <div className="settingInput">
+                    <h5>Book Late Return One Day Fine </h5>
+                    <input
+                      className="settingField2"
+                      type="number"
+                      name="bookLateReturnOneDayFine"
+                      value={formik.values.bookLateReturnOneDayFine}
+                      onChange={formik.handleChange}
+                    />
+                  </div>
+                  {formik.touched.bookLateReturnOneDayFine &&
+                  formik.errors.bookLateReturnOneDayFine ? (
+                    <div className="errorMessage">
+                      {formik.errors.bookLateReturnOneDayFine}
+                    </div>
+                  ) : null}
                 </div>
-              </div>
 
-              <div className="cont-email">
-                <div className="settingInput">
-                  <h5>Currency</h5>
-                  <select
-                    name="Corrency"
-                    className="settingField2"
-                    onChange={(e) => console.log(e.target.value)}
-                  >
-                    {currencies.map((curr) => (
-                      <option value={curr["value"]}>{curr["label"]}</option>
-                    ))}
-                  </select>
-                </div>
+                <div className="cont-email">
+                  <div className="settingInput">
+                    <h5>Currency</h5>
+                    <select
+                      name="Corrency"
+                      className="settingField2"
+                      onChange={(e) => console.log(e.target.value)}
+                    >
+                      {currencies.map((curr) => (
+                        <option value={curr["value"]}>{curr["label"]}</option>
+                      ))}
+                    </select>
+                  </div>
 
-                <div className="settingInput">
-                  <h5>Timezone </h5>
-                  <select
-                    name="timezone"
-                    className="settingField2"
-                    onChange={(e) => console.log(e.target.value)}
-                  >
-                    {timeies.map((tim) => (
-                      <option value={tim["offset"]}>{tim["name"]}</option>
-                    ))}
-                  </select>
+                  <div className="settingInput">
+                    <h5>Timezone </h5>
+                    <select
+                      name="timezone"
+                      className="settingField2"
+                      onChange={(e) => console.log(e.target.value)}
+                    >
+                      {timeies.map((tim) => (
+                        <option value={tim["name"]}>{tim["offset"]}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div className="profilebtnDiv">
-                <button className="profileUpdate">Save</button>
-              </div>
+                <div className="settingInput">
+                  <h5>Per User Book Issue Limit </h5>
+                  <input
+                    className="settingFieldlast"
+                    type="number"
+                    name="perUserBookIssueLimit"
+                    value={formik.values.perUserBookIssueLimit}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+                {formik.touched.perUserBookIssueLimit &&
+                formik.errors.perUserBookIssueLimit ? (
+                  <div className="errorMessage">
+                    {formik.errors.perUserBookIssueLimit}
+                  </div>
+                ) : null}
+                <div className="profilebtnDiv">
+                  <button type="submit" className="profileUpdate">
+                    Save
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
         </div>
       )}
     </div>
