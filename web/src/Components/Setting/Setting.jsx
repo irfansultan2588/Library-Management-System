@@ -1067,18 +1067,17 @@ const Setting = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [uid, setuid] = useState(state.user.data._id);
-  let [seetings, setseetings] = useState([]);
+  const [seetings, setseetings] = useState({});
 
   useEffect(() => {
     const getSetting = async () => {
       try {
         let response = await axios({
-          url: `${state.baseUrl}/settings`,
+          url: `${state.baseUrl}/settings/${state?.user?._id}`,
           method: "get",
           withCredentials: true,
         });
         if (response.status === 200) {
-          console.log("response======: ", response.data);
           setseetings(response?.data);
         } else {
           console.log("error in api call");
@@ -1092,13 +1091,21 @@ const Setting = () => {
 
   const formik = useFormik({
     initialValues: {
-      libraryName: "",
-      address: "",
-      contactNo: "",
-      emailaddress: "",
-      bookReturnDayLimit: "",
-      bookLateReturnOneDayFine: "",
-      perUserBookIssueLimit: "",
+      libraryName: seetings?.libraryName ? seetings?.libraryName : "",
+      address: seetings?.address ? seetings?.address : "",
+      contactNo: seetings?.contactNo ? seetings?.contactNo : "",
+      emailaddress: seetings?.emailaddress ? seetings?.emailaddress : "",
+      currency: seetings?.currency ? seetings?.currency : "",
+      timezone: seetings?.timezone ? seetings?.timezone : "",
+      bookReturnDayLimit: seetings?.bookReturnDayLimit
+        ? seetings?.bookReturnDayLimit
+        : "",
+      bookLateReturnOneDayFine: seetings?.bookLateReturnOneDayFine
+        ? seetings?.bookLateReturnOneDayFine
+        : "",
+      perUserBookIssueLimit: seetings?.perUserBookIssueLimit
+        ? seetings?.perUserBookIssueLimit
+        : "",
     },
     validationSchema: yup.object({
       libraryName: yup
@@ -1121,35 +1128,67 @@ const Setting = () => {
         .required("PerUserBookIssueLimit is required"),
     }),
 
+    enableReinitialize: true,
     onSubmit: async (values, { resetForm }) => {
-      axios({
-        method: "post",
-        url: `${state.baseUrl}/setting`,
-        data: {
-          libraryName: values.libraryName,
-          address: values.address,
-          contactNo: values.contactNo,
-          emailaddress: values.emailaddress,
-          bookReturnDayLimit: values.bookReturnDayLimit,
-          bookLateReturnOneDayFine: values.bookLateReturnOneDayFine,
-          perUserBookIssueLimit: values.perUserBookIssueLimit,
-          uid,
-        },
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((res) => {
-          toast.success("Settings Updated", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          setToggleRefresh(!toggleRefresh);
-          resetForm();
+      if (seetings === null) {
+        axios({
+          method: "post",
+          url: `${state.baseUrl}/setting`,
+          data: {
+            libraryName: values?.libraryName,
+            address: values?.address,
+            contactNo: values?.contactNo,
+            emailaddress: values.emailaddress,
+            bookReturnDayLimit: values?.bookReturnDayLimit,
+            bookLateReturnOneDayFine: values?.bookLateReturnOneDayFine,
+            perUserBookIssueLimit: values?.perUserBookIssueLimit,
+            currency: values?.currency,
+            timezone: values?.timezone,
+            uid,
+          },
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         })
-        .catch((err) => {
-          toast.error("Settings Updated Error", {
+          .then((res) => {
+            toast.success("Create Librarry", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            setToggleRefresh(!toggleRefresh);
+          })
+          .catch((err) => {
+            toast.error("Create Librarry Error", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            console.log("ERROR", err);
+          });
+      } else {
+        try {
+          const update = await axios.put(
+            `${state.baseUrl}/settings/${seetings?._id}`,
+            {
+              libraryName: values?.libraryName,
+              address: values?.address,
+              contactNo: values?.contactNo,
+              emailaddress: values?.emailaddress,
+              bookReturnDayLimit: values?.bookReturnDayLimit,
+              bookLateReturnOneDayFine: values?.bookLateReturnOneDayFine,
+              perUserBookIssueLimit: values?.perUserBookIssueLimit,
+              currency: values?.currency,
+              timezone: values?.timezone,
+            }
+          );
+          toast.success("Updated Librarry", {
             position: toast.POSITION.TOP_CENTER,
           });
-          console.log("ERROR", err);
-        });
+          resetForm();
+        } catch (e) {
+          toast.error("Updated Error", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          console.log("Error in api call: ", e);
+          setToggleRefresh(!toggleRefresh);
+        }
+      }
     },
   });
   return (
@@ -1278,9 +1317,9 @@ const Setting = () => {
                   <div className="settingInput">
                     <h5>Currency</h5>
                     <select
-                      name="Corrency"
+                      name="currency"
                       className="settingField2"
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={formik.handleChange}
                     >
                       {currencies.map((curr) => (
                         <option value={curr["value"]}>{curr["label"]}</option>
@@ -1293,7 +1332,7 @@ const Setting = () => {
                     <select
                       name="timezone"
                       className="settingField2"
-                      onChange={(e) => console.log(e.target.value)}
+                      onChange={formik.handleChange}
                     >
                       {timeies.map((tim) => (
                         <option value={tim["name"]}>{tim["offset"]}</option>
@@ -1319,7 +1358,7 @@ const Setting = () => {
                 ) : null}
                 <div className="profilebtnDiv">
                   <button type="submit" className="profileUpdate">
-                    Save
+                    {seetings === null ? "Create library" : "Update library"}
                   </button>
                 </div>
               </form>

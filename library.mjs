@@ -45,6 +45,8 @@ const librarySchema = new mongoose.Schema({
   bookReturnDayLimit: { type: Number, required: true },
   bookLateReturnOneDayFine: { type: Number, required: true },
   perUserBookIssueLimit: { type: Number, required: true },
+  currency: { type: String, required: true },
+  timezone: { type: String, required: true },
   createdOn: { type: Date, default: Date.now },
 });
 const libraryModel = mongoose.model("library", librarySchema);
@@ -63,6 +65,8 @@ app.post("/setting", (req, res) => {
           bookReturnDayLimit: body.bookReturnDayLimit,
           bookLateReturnOneDayFine: body.bookLateReturnOneDayFine,
           perUserBookIssueLimit: body.perUserBookIssueLimit,
+          currency: body.currency,
+          timezone: body.timezone,
           uid: body.uid,
         })
         .then((resss) => {
@@ -76,12 +80,45 @@ app.post("/setting", (req, res) => {
   });
 });
 ///////////library get setting/////////////
-app.get("/settings", async (req, res) => {
+app.get("/settings/:uid", async (req, res) => {
   try {
-    let data = await libraryModel.findOne({ _id: req?.body?.data }).exec();
+    let data = await libraryModel.findOne({ u_id: req.params.id }).exec();
+    console.log("🚀 ~ body?.data", data);
     res.send(data);
   } catch (error) {
-    res.status(500).send({ message: "error getting users" });
+    res.status(500).send({ message: "error getting librarydata" });
+  }
+});
+
+///////////library update/////////////
+app.put("/settings/:uid", async (req, res) => {
+  const update = {};
+  if (req.body.libraryName) update.libraryName = req.body.libraryName;
+  if (req.body.address) update.address = req.body.address;
+  if (req.body.contactNo) update.contactNo = req.body.contactNo;
+  if (req.body.emailaddress) update.emailaddress = req.body.emailaddress;
+  if (req.body.currency) update.currency = req.body.currency;
+  if (req.body.timezone) update.timezone = req.body.timezone;
+  if (req.body.bookReturnDayLimit)
+    update.bookReturnDayLimit = req.body.bookReturnDayLimit;
+  if (req.body.bookLateReturnOneDayFine)
+    update.bookLateReturnOneDayFine = req.body.bookLateReturnOneDayFine;
+  if (req.body.perUserBookIssueLimit)
+    update.perUserBookIssueLimit = req.body.perUserBookIssueLimit;
+
+  try {
+    const updated = await libraryModel
+      .findOneAndUpdate({ u_id: req.params.id }, update, { new: true })
+      .exec();
+
+    res.send({
+      message: "library updated successfuly",
+      library: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate library",
+    });
   }
 });
 ///////////user Signup////////////////

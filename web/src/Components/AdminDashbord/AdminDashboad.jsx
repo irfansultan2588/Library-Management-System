@@ -33,6 +33,7 @@ import CommonCard from "../homecard/CommonCard";
 import Profile from "../profile/Profile";
 import Setting from "../Setting/Setting";
 import Logout from "../LogOut/Logout";
+import Category from "../Category/Category";
 
 const AdminDashboad = () => {
   let { state, dispatch } = useContext(GlobalContext);
@@ -87,6 +88,8 @@ const AdminDashboad = () => {
         return <Profile />;
       case "setting":
         return <Setting />;
+      case "category":
+        return <Category />;
       case "logout":
         return <CommonCard />;
       default:
@@ -177,12 +180,20 @@ const AdminDashboad = () => {
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
-              <NavLink exact to="/" activeClassName="activeClicked">
+              <NavLink
+                exact
+                to="/dashboard/home"
+                activeClassName="activeClicked"
+              >
                 <CDBSidebarMenuItem icon="columns">
                   Dashboard
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/tables" activeClassName="activeClicked">
+              <NavLink
+                exact
+                to="/dashboard/category"
+                activeClassName="activeClicked"
+              >
                 <CDBSidebarMenuItem>
                   {" "}
                   <CategoryIcon className="icons" />
