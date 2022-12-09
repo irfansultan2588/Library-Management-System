@@ -1,0 +1,36 @@
+.main-category {
+  display: flex;
+  justify-content: space-between;
+  width: 81vw;
+  border-bottom: 1px solid lightgray;
+  background-color: #f7f7f7;
+}
+.btn-con {
+  padding: 8px;
+}
+.btn-add {
+  background-color: green;
+  padding: 3px 10px 3px 10px;
+  color: #fff;
+  border: none;
+}
+.categoryMain {
+  margin-top: 3rem;
+  margin: 20px;
+}
+.from-man {
+  border: 1px solid lightgray;
+}
+#select {
+  padding: 5px 10px 5px 10px;
+  border: 1px solid lightgray;
+}
+.seletInput {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+.para {
+  margin-left: 10px;
+  margin-top: 5px;
+}

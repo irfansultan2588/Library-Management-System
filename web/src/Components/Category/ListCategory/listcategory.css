@@ -1,0 +1,11 @@
+.maincategory {
+  width: 98.5%;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+.list-name {
+  width: 20%;
+  border: 1px solid lightgray;
+  padding: 8px 0px 5px 5px;
+}
