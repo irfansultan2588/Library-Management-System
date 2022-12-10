@@ -52,21 +52,23 @@ const Category = () => {
                 <a href="#"> Dashboard</a> <span>/ Categoty Management</span>
               </h5>
             </div>
-            <div className="from-man">
-              <div className="main-category">
-                <div className="edit-setting-hadding">
-                  <h5>
-                    {" "}
-                    <CategoryIcon /> Category Management
-                  </h5>
-                </div>
-                <div className="btn-con">
-                  <button className="btn-add" onClick={() => setPage(true)}>
-                    Add
-                  </button>
+            {!page && (
+              <div className="from-man">
+                <div className="main-category">
+                  <div className="edit-setting-hadding">
+                    <h5>
+                      {" "}
+                      <CategoryIcon /> Category Management
+                    </h5>
+                  </div>
+                  <div className="btn-con">
+                    <button className="btn-add" onClick={() => setPage(true)}>
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
             {page ? <Createcategory /> : <Listcategory />}
           </div>
           {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}

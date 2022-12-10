@@ -70,7 +70,6 @@ export default function SignUp() {
       })
         .then((res) => {
           alert("upload Success");
-
           setToggleRefresh(!toggleRefresh);
           navigate("/Otp", { state: { email: values.email } });
         })

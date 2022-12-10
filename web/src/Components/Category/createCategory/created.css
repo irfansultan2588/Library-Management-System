@@ -1,4 +1,19 @@
 .main-add {
+  width: 40%;
   margin-top: 10px;
-  border: 1px solid red;
+  border: 1px solid lightgray;
+}
+.main-addww {
+  background-color: #f7f7f7f7;
+  border: 1px solid lightgray;
+  padding: 5px;
+}
+.btn-Edit {
+  padding: 10px;
+}
+.btn-2 {
+  background-color: #24a0ed;
+  border: none;
+  color: #f7f7f7f7;
+  padding: 5px 10px 5px 10px;
 }

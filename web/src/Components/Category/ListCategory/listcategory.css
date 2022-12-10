@@ -9,3 +9,28 @@
   border: 1px solid lightgray;
   padding: 8px 0px 5px 5px;
 }
+.btn-enable {
+  background-color: green;
+  border: none;
+  color: #fff;
+  padding: 5px 10px 5px 10px;
+}
+.btn-disable {
+  background-color: red;
+  border: none;
+  color: #fff;
+  padding: 5px 10px 5px 10px;
+}
+.btn-edit {
+  background-color: #24a0ed;
+  border: none;
+  color: #fff;
+  padding: 5px 10px 5px 10px;
+}
+.btn-delete {
+  background-color: red;
+  border: none;
+  color: #fff;
+  padding: 5px 10px 5px 10px;
+  margin-left: 5px;
+}

@@ -50,6 +50,48 @@ const librarySchema = new mongoose.Schema({
   createdOn: { type: Date, default: Date.now },
 });
 const libraryModel = mongoose.model("library", librarySchema);
+
+///////////////category schema//////////
+
+const categorySchema = new mongoose.Schema({
+  categoryName: { type: String, required: true },
+  status: { type: Boolean, default: true },
+  uid: { type: String },
+  updatedOn: { type: Date, default: Date.now },
+  createdOn: { type: Date, default: Date.now },
+});
+const categoryModel = mongoose.model("category", categorySchema);
+////////////category////////////////
+app.post("/category", (req, res) => {
+  let body = req.body;
+
+  categoryModel.findOne({ email: body.email }, (err, library) => {
+    if (!err) {
+      categoryModel
+        .create({
+          categoryName: body.categoryName,
+          uid: body.uid,
+        })
+        .then((resss) => {
+          res.status(200).send({ message: "category is created" });
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          res.status(500).send({ message: "internal server error" });
+        });
+    }
+  });
+});
+////////////category getdata////////////////
+app.get("/categorys/:uid", async (req, res) => {
+  try {
+    let data = await categoryModel.findOne({ u_id: req.params.id }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting categorydata" });
+  }
+});
+
 ///////////library setting/////////////
 app.post("/setting", (req, res) => {
   let body = req.body;
@@ -83,7 +125,6 @@ app.post("/setting", (req, res) => {
 app.get("/settings/:uid", async (req, res) => {
   try {
     let data = await libraryModel.findOne({ u_id: req.params.id }).exec();
-    console.log("🚀 ~ body?.data", data);
     res.send(data);
   } catch (error) {
     res.status(500).send({ message: "error getting librarydata" });
