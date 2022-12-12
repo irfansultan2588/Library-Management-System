@@ -7,7 +7,7 @@ import { GlobalContext } from "../../../Context";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Createcategory = () => {
@@ -15,10 +15,32 @@ const Createcategory = () => {
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [uid, setuid] = useState(state.user.data._id);
   const navigate = useNavigate();
+  const [edit, setedit] = useState(false);
+  const [category, setcategory] = useState({});
+
+  useEffect(() => {
+    const getcategory = async () => {
+      try {
+        let response = await axios({
+          url: `${state.baseUrl}/categorys/${state?.user?._id}`,
+          method: "get",
+          withCredentials: true,
+        });
+        if (response.status === 200) {
+          setcategory(response?.data);
+        } else {
+          console.log("error in api call");
+        }
+      } catch (e) {
+        console.log("Error in api", e);
+      }
+    };
+    getcategory();
+  }, []);
 
   const formik = useFormik({
     initialValues: {
-      categoryName: "",
+      categoryName: category?.categoryName ? category?.categoryName : "",
     },
     validationSchema: yup.object({
       categoryName: yup
@@ -26,69 +48,68 @@ const Createcategory = () => {
         .required("categoryName is required"),
     }),
 
-    // enableReinitialize: true,
+    enableReinitialize: true,
     onSubmit: async (values) => {
-      // if (seetings === null) {
-      axios({
-        method: "post",
-        url: `${state.baseUrl}/category`,
-        data: {
-          categoryName: values?.categoryName,
-          uid,
-        },
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-        .then((res) => {
-          toast.success("Create Category", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          navigate("/dashboard/category");
-          setToggleRefresh(!toggleRefresh);
+      if (category === null) {
+        axios({
+          method: "post",
+          url: `${state.baseUrl}/category`,
+          data: {
+            categoryName: values?.categoryName,
+            uid,
+          },
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
         })
-        .catch((err) => {
-          toast.error("Create Category Error", {
+          .then((res) => {
+            toast.success("Create Category", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            navigate("/dashboard/category");
+            setToggleRefresh(!toggleRefresh);
+          })
+          .catch((err) => {
+            toast.error("Create Category Error", {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            console.log("ERROR", err);
+          });
+      } else {
+        try {
+          const update = await axios.put(
+            `${state.baseUrl}/category/${category?._id}`,
+            {
+              categoryName: values?.categoryName,
+            }
+          );
+          toast.success("Updated category", {
             position: toast.POSITION.TOP_CENTER,
           });
-          console.log("ERROR", err);
-        });
-      // } else {
-      // try {
-      //   const update = await axios.put(
-      //     `${state.baseUrl}/settings/${seetings?._id}`,
-      //     {
-      //       libraryName: values?.libraryName,
-      //       address: values?.address,
-      //       contactNo: values?.contactNo,
-      //       emailaddress: values?.emailaddress,
-      //       bookReturnDayLimit: values?.bookReturnDayLimit,
-      //       bookLateReturnOneDayFine: values?.bookLateReturnOneDayFine,
-      //       perUserBookIssueLimit: values?.perUserBookIssueLimit,
-      //       currency: values?.currency,
-      //       timezone: values?.timezone,
-      //     }
-      //   );
-      //   toast.success("Updated Librarry", {
-      //     position: toast.POSITION.TOP_CENTER,
-      //   });
-      // } catch (e) {
-      //   toast.error("Updated Error", {
-      //     position: toast.POSITION.TOP_CENTER,
-      //   });
-      //   console.log("Error in api call: ", e);
-      //   setToggleRefresh(!toggleRefresh);
-      // }
-      // }
+        } catch (e) {
+          toast.error("Updated Error", {
+            position: toast.POSITION.TOP_CENTER,
+          });
+          console.log("Error in api call: ", e);
+          setToggleRefresh(!toggleRefresh);
+        }
+      }
     },
   });
 
   return (
     <div className="main-add">
       <div className="main-addww">
-        <h6>
-          <PersonAddAltIcon />
-          Edit Category Details
-        </h6>
+        {category === null ? (
+          <h6>
+            <PersonAddAltIcon />
+            Add New Category
+          </h6>
+        ) : (
+          <h6>
+            <PersonAddAltIcon />
+            Edit Category Details
+          </h6>
+        )}
       </div>
       <form
         onSubmit={(e) => {
@@ -102,6 +123,7 @@ const Createcategory = () => {
             className="settingField"
             type="text"
             name="categoryName"
+            placeholder="Enter Category Name"
             value={formik.values.categoryName}
             onChange={formik.handleChange}
           />
@@ -112,7 +134,7 @@ const Createcategory = () => {
 
         <div className="btn-Edit">
           <button type="submit" className="btn-2">
-            Add
+            {category === null ? "Add" : "Edit"}
           </button>
         </div>
       </form>

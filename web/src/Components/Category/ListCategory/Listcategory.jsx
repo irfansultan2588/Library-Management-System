@@ -14,7 +14,6 @@ const Listcategory = () => {
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [uid, setuid] = useState(state.user.data._id);
   const [updatpage, setupdatpage] = useState(false);
-
   const [category, setcategory] = useState({});
 
   useEffect(() => {
@@ -102,7 +101,7 @@ const Listcategory = () => {
     },
   });
   return (
-    <div>
+    <>
       {!updatpage ? (
         <form
           onSubmit={(e) => {
@@ -182,6 +181,7 @@ const Listcategory = () => {
             <div className="list-name">
               <h6>{category.updatedOn}</h6>
             </div>
+
             <div className="list-name">
               <button className="btn-edit" onClick={() => setupdatpage(true)}>
                 Edit
@@ -193,8 +193,9 @@ const Listcategory = () => {
       ) : (
         <Createcategory />
       )}
+
       {/* {updatpage && <Createcategory />} */}
-    </div>
+    </>
   );
 };
 

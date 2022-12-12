@@ -57,8 +57,8 @@ const categorySchema = new mongoose.Schema({
   categoryName: { type: String, required: true },
   status: { type: Boolean, default: true },
   uid: { type: String },
-  updatedOn: { type: Date, default: Date.now },
   createdOn: { type: Date, default: Date.now },
+  // updatedAt: { type: Date },
 });
 const categoryModel = mongoose.model("category", categorySchema);
 ////////////category////////////////
@@ -89,6 +89,35 @@ app.get("/categorys/:uid", async (req, res) => {
     res.send(data);
   } catch (error) {
     res.status(500).send({ message: "error getting categorydata" });
+  }
+});
+
+app.put("/categorys/:uid", async (req, res) => {
+  const update = {};
+  if (req.body.categoryName) update.categoryName = req.body.categoryName;
+
+  try {
+    const updated = await categoryModel
+      .findOneAndUpdate(
+        { u_id: req.params.id },
+        { updateAt: { $exists: false } },
+        {
+          $currentDate: {
+            updateAt: true,
+          },
+        }
+      )
+
+      .exec();
+
+    res.send({
+      message: "library updated successfuly",
+      category: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate library",
+    });
   }
 });
 
