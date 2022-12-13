@@ -89,8 +89,6 @@ const Createcategory = () => {
           toast.error("Updated Error", {
             position: toast.POSITION.TOP_CENTER,
           });
-          console.log("Error in api call: ", e);
-          setToggleRefresh(!toggleRefresh);
         }
       }
     },
@@ -99,7 +97,7 @@ const Createcategory = () => {
   return (
     <div className="main-add">
       <div className="main-addww">
-        {category === null ? (
+        {category ? (
           <h6>
             <PersonAddAltIcon />
             Add New Category
@@ -134,7 +132,7 @@ const Createcategory = () => {
 
         <div className="btn-Edit">
           <button type="submit" className="btn-2">
-            {category === null ? "Add" : "Edit"}
+            {category ? "Add" : "Edit"}
           </button>
         </div>
       </form>

@@ -92,7 +92,7 @@ app.get("/categorys/:uid", async (req, res) => {
   }
 });
 
-app.put("/categorys/:uid", async (req, res) => {
+app.put("/category/:_id", async (req, res) => {
   const update = {};
   if (req.body.categoryName) update.categoryName = req.body.categoryName;
 

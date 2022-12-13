@@ -36,88 +36,44 @@ const Listcategory = () => {
     getcategory();
   }, []);
 
-  const formik = useFormik({
-    initialValues: {
-      categoryName: "",
-    },
-    validationSchema: yup.object({
-      categoryName: yup
-        .string("Enter your categoryName")
-        .required("categoryName is required"),
-    }),
+  // const handleSubmit = async (values) => {
+  //   // event.preventDefault();
 
-    // enableReinitialize: true,
-    onSubmit: async (values) => {
-      // if (seetings === null) {
-      axios({
-        method: "post",
-        url: `${state.baseUrl}/category`,
-        data: {
-          categoryName: values?.categoryName,
-          uid,
-        },
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-        .then((res) => {
-          toast.success("Create Category", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          setToggleRefresh(!toggleRefresh);
-        })
-        .catch((err) => {
-          toast.error("Create Category Error", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          console.log("ERROR", err);
-        });
-      // } else {
-      // try {
-      //   const update = await axios.put(
-      //     `${state.baseUrl}/settings/${seetings?._id}`,
-      //     {
-      //       libraryName: values?.libraryName,
-      //       address: values?.address,
-      //       contactNo: values?.contactNo,
-      //       emailaddress: values?.emailaddress,
-      //       bookReturnDayLimit: values?.bookReturnDayLimit,
-      //       bookLateReturnOneDayFine: values?.bookLateReturnOneDayFine,
-      //       perUserBookIssueLimit: values?.perUserBookIssueLimit,
-      //       currency: values?.currency,
-      //       timezone: values?.timezone,
-      //     }
-      //   );
-      //   toast.success("Updated Librarry", {
-      //     position: toast.POSITION.TOP_CENTER,
-      //   });
-      // } catch (e) {
-      //   toast.error("Updated Error", {
-      //     position: toast.POSITION.TOP_CENTER,
-      //   });
-      //   console.log("Error in api call: ", e);
-      //   setToggleRefresh(!toggleRefresh);
-      // }
-      // }
-    },
-  });
+  //   try {
+  //     let response = await axios
+  //       .post(
+  //         `${state.baseUrl}/category`,
+  //         {
+  //           data: {
+  //             categoryName: values?.categoryName,
+  //             uid,
+  //           },
+  //         },
+  //         {
+  //           headers: { "Content-Type": "application/json" },
+  //           withCredentials: true,
+  //         }
+  //       )
+  //       .then((res) => {
+  //         toast.success("Create Category", {
+  //           position: toast.POSITION.TOP_CENTER,
+  //         });
+  //         setToggleRefresh(!toggleRefresh);
+  //       });
+  //     console.log("🚀 ~ response", response);
+  //   } catch {
+  //     toast.error("Create Category Error", {
+  //       position: toast.POSITION.TOP_CENTER,
+  //     });
+  //   }
+  // };
   return (
     <>
       {!updatpage ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            formik.handleSubmit();
-          }}
-        >
+        <>
           <div className="seletInput">
             <div>
-              <select
-                id="select"
-                name="select"
-                type="select"
-                value={formik.values.select}
-                onChange={formik.handleChange}
-              >
+              <select id="select" name="select" type="select">
                 <option>10</option>
                 <option>9</option>
                 <option>8 </option>
@@ -139,9 +95,6 @@ const Listcategory = () => {
               />
             </div>
           </div>
-          {formik.touched.select && formik.errors.select ? (
-            <div className="errorMessage">{formik.errors.select}</div>
-          ) : null}
 
           <div className="maincategory">
             <div className="list-name">
@@ -189,12 +142,11 @@ const Listcategory = () => {
               <button className="btn-delete">Delete</button>
             </div>
           </div>
-        </form>
+        </>
       ) : (
         <Createcategory />
+        // {updatpage && <Createcategory />}
       )}
-
-      {/* {updatpage && <Createcategory />} */}
     </>
   );
 };
