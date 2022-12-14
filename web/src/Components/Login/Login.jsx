@@ -74,7 +74,6 @@ function Login() {
           position: toast.POSITION.TOP_CENTER,
         });
         dispatch({ type: "USER_LOGIN", payload: values });
-        console.log("🚀 ~ values.data", values);
       } catch (e) {
         toast.error("Login Faild", {
           position: toast.POSITION.TOP_CENTER,

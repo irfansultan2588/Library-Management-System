@@ -85,38 +85,31 @@ app.post("/category", (req, res) => {
 ////////////category getdata////////////////
 app.get("/categorys/:uid", async (req, res) => {
   try {
-    let data = await categoryModel.findOne({ u_id: req.params.id }).exec();
+    let data = await categoryModel.find({ uid: req.params.uid }).exec();
     res.send(data);
   } catch (error) {
     res.status(500).send({ message: "error getting categorydata" });
   }
 });
 
-app.put("/category/:_id", async (req, res) => {
+app.put("/category/:cid", async (req, res) => {
   const update = {};
+
   if (req.body.categoryName) update.categoryName = req.body.categoryName;
 
   try {
     const updated = await categoryModel
-      .findOneAndUpdate(
-        { u_id: req.params.id },
-        { updateAt: { $exists: false } },
-        {
-          $currentDate: {
-            updateAt: true,
-          },
-        }
-      )
-
+      .findOneAndUpdate({ _id: req.params.cid }, update, { new: true })
       .exec();
 
     res.send({
-      message: "library updated successfuly",
+      message: "category updated successfuly",
       category: updated,
     });
+    console.log("🚀 ~ updated", updated);
   } catch (error) {
     res.status(500).send({
-      message: "faild to upadate library",
+      message: "faild to upadate category",
     });
   }
 });

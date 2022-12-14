@@ -8,6 +8,7 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Createcategory from "./createCategory/Createcategory";
 import Listcategory from "./ListCategory/Listcategory";
+import Updatepage from "./updatepage/Updatepage";
 
 // import { NavLink } from "react-router-dom";
 // import { useNavigate, useParams } from "react-router-dom";
@@ -35,6 +36,7 @@ const Category = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [page, setPage] = useState(false);
+  const [details, setdetails] = useState(false);
 
   return (
     <div>
@@ -69,9 +71,15 @@ const Category = () => {
                 </div>
               </div>
             )}
-            {page ? <Createcategory /> : <Listcategory />}
+            {page ? (
+              <Createcategory />
+            ) : details ? (
+              <Updatepage details={details} />
+            ) : (
+              <Listcategory setdetails={setdetails} />
+            )}
           </div>
-          {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+          <Copyright sx={{ mt: 8, mb: 4 }} />
         </div>
       )}
     </div>

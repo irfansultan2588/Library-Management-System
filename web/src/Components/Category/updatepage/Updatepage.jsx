@@ -1,25 +1,24 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useContext } from "react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import "./created.css";
+import { GlobalContext } from "../../../Context";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { GlobalContext } from "../../../Context";
-import { useContext } from "react";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-const Createcategory = () => {
+const Updatepage = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
-  const [toggleRefresh, setToggleRefresh] = useState(true);
+  const [category, setcategory] = useState([]);
   const [uid, setuid] = useState(state.user.data._id);
-  const navigate = useNavigate();
-  const [category, setcategory] = useState({});
+  const [cid, setcid] = useState(details._id);
 
   const formik = useFormik({
     initialValues: {
-      categoryName: "",
+      categoryName: details.categoryName,
+      // categoryid,
     },
     validationSchema: yup.object({
       categoryName: yup
@@ -27,40 +26,34 @@ const Createcategory = () => {
         .required("categoryName is required"),
     }),
 
-    onSubmit: async (values, { resetForm }) => {
-      axios({
-        method: "post",
-        url: `${state.baseUrl}/category`,
-        data: {
-          categoryName: values?.categoryName,
-          uid,
-        },
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-        .then((res) => {
-          toast.success("Create Category", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          resetForm();
-          navigate("/dashboard/category");
-          setToggleRefresh(!toggleRefresh);
-        })
-        .catch((err) => {
-          toast.error("Create Category Error", {
-            position: toast.POSITION.TOP_CENTER,
-          });
-          console.log("ERROR", err);
+    onSubmit: async (value) => {
+      console.log("🚀 ~ details", details);
+      try {
+        const update = await axios.put(
+          `${state.baseUrl}/category/${details._id}`,
+          {
+            categoryName: value?.categoryName,
+            // _id: details?._id,
+          }
+        );
+        console.log("🚀 ~ cid", cid);
+
+        toast.success("Updated category", {
+          position: toast.POSITION.TOP_CENTER,
         });
+      } catch (e) {
+        toast.error("Updated Error", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      }
     },
   });
-
   return (
     <div className="main-add">
       <div className="main-addww">
         <h6>
           <PersonAddAltIcon />
-          Add New Category
+          Edit Category Details
         </h6>
       </div>
       <form
@@ -75,7 +68,6 @@ const Createcategory = () => {
             className="settingField"
             type="text"
             name="categoryName"
-            placeholder="Enter Category Name"
             value={formik.values.categoryName}
             onChange={formik.handleChange}
           />
@@ -86,7 +78,7 @@ const Createcategory = () => {
 
         <div className="btn-Edit">
           <button type="submit" className="btn-2">
-            Add
+            Edit
           </button>
         </div>
       </form>
@@ -94,4 +86,4 @@ const Createcategory = () => {
   );
 };
 
-export default Createcategory;
+export default Updatepage;
