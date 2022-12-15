@@ -3,27 +3,23 @@ import { useContext } from "react";
 import { GlobalContext } from "../../../Context";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./listcategory.css";
-import Createcategory from "../createCategory/Createcategory";
-import Updatepage from "../updatepage/Updatepage";
-import Category from "../Category";
 
-const Listcategory = ({ setdetails }) => {
+const ListRack = ({ setdetails }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [updatpage, setupdatpage] = useState(false);
-  const [category, setcategory] = useState([]);
+  const [locationRack, setlocationRack] = useState([]);
 
   useEffect(() => {
-    const getcategory = async () => {
+    const getlocationRack = async () => {
       try {
         let response = await axios({
-          url: `${state.baseUrl}/categorys/${state?.user?.data?._id}`,
+          url: `${state.baseUrl}/locationRacks/${state?.user?.data?._id}`,
           method: "get",
           withCredentials: true,
         });
 
         if (response.status === 200) {
-          setcategory(response?.data);
+          setlocationRack(response?.data);
         } else {
           console.log("error in api call");
         }
@@ -31,7 +27,7 @@ const Listcategory = ({ setdetails }) => {
         console.log("Error in api", e);
       }
     };
-    getcategory();
+    getlocationRack();
   }, []);
 
   return (
@@ -64,7 +60,7 @@ const Listcategory = ({ setdetails }) => {
       <div className="maincategory">
         <div className="list-name">
           <h6>
-            <b>Category Name</b>
+            <b>Location Rack Name</b>
           </h6>
         </div>
         <div className="list-name">
@@ -89,11 +85,11 @@ const Listcategory = ({ setdetails }) => {
         </div>
       </div>
 
-      {category?.map((item) => {
+      {locationRack?.map((item) => {
         return (
           <div className="maincategory">
             <div className="list-name">
-              <h6>{item.categoryName}</h6>
+              <h6>{item.locationRackName}</h6>
             </div>
             <div className="list-name">
               <h6>
@@ -126,4 +122,4 @@ const Listcategory = ({ setdetails }) => {
   );
 };
 
-export default Listcategory;
+export default ListRack;

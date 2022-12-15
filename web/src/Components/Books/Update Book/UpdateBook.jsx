@@ -1,37 +1,32 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { useContext } from "react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { GlobalContext } from "../../../Context";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Updatepage = ({ details }) => {
+const UpdateBook = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
 
   const formik = useFormik({
     initialValues: {
-      categoryName: details.categoryName,
+      bookName: details.bookName,
     },
     validationSchema: yup.object({
-      categoryName: yup
-        .string("Enter your categoryName")
-        .required("categoryName is required"),
+      bookName: yup
+        .string("Enter your bookName")
+        .required("bookName is required"),
     }),
 
     onSubmit: async (value) => {
       try {
-        const update = await axios.put(
-          `${state.baseUrl}/category/${details._id}`,
-          {
-            categoryName: value?.categoryName,
-          }
-        );
+        const update = await axios.put(`${state.baseUrl}/book/${details._id}`, {
+          bookName: value?.bookName,
+        });
 
-        toast.success("Updated category", {
+        toast.success("Updated Book", {
           position: toast.POSITION.TOP_CENTER,
         });
       } catch (e) {
@@ -41,12 +36,13 @@ const Updatepage = ({ details }) => {
       }
     },
   });
+
   return (
     <div className="main-add">
       <div className="main-addww">
         <h6>
           <PersonAddAltIcon />
-          Edit Category Details
+          Edit Book Details
         </h6>
       </div>
       <form
@@ -56,17 +52,17 @@ const Updatepage = ({ details }) => {
         }}
       >
         <div className="settingInput">
-          <h5>Category Name</h5>
+          <h5>Book Name</h5>
           <input
             className="settingField"
             type="text"
-            name="categoryName"
-            value={formik.values.categoryName}
+            name="bookName"
+            value={formik.values.bookName}
             onChange={formik.handleChange}
           />
         </div>
-        {formik.touched.categoryName && formik.errors.categoryName ? (
-          <div className="errorMessage">{formik.errors.categoryName}</div>
+        {formik.touched.bookName && formik.errors.bookName ? (
+          <div className="errorMessage">{formik.errors.bookName}</div>
         ) : null}
 
         <div className="btn-Edit">
@@ -79,4 +75,4 @@ const Updatepage = ({ details }) => {
   );
 };
 
-export default Updatepage;
+export default UpdateBook;

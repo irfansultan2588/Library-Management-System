@@ -3,27 +3,23 @@ import { useContext } from "react";
 import { GlobalContext } from "../../../Context";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import "./listcategory.css";
-import Createcategory from "../createCategory/Createcategory";
-import Updatepage from "../updatepage/Updatepage";
-import Category from "../Category";
 
-const Listcategory = ({ setdetails }) => {
+const ListBook = ({ setdetails }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [updatpage, setupdatpage] = useState(false);
-  const [category, setcategory] = useState([]);
+  const [book, getBook] = useState([]);
 
   useEffect(() => {
-    const getcategory = async () => {
+    const getBook = async () => {
       try {
         let response = await axios({
-          url: `${state.baseUrl}/categorys/${state?.user?.data?._id}`,
+          url: `${state.baseUrl}/books/${state?.user?.data?._id}`,
           method: "get",
           withCredentials: true,
         });
 
         if (response.status === 200) {
-          setcategory(response?.data);
+          getBook(response?.data);
         } else {
           console.log("error in api call");
         }
@@ -31,9 +27,8 @@ const Listcategory = ({ setdetails }) => {
         console.log("Error in api", e);
       }
     };
-    getcategory();
+    getBook();
   }, []);
-
   return (
     <>
       <div className="seletInput">
@@ -64,7 +59,7 @@ const Listcategory = ({ setdetails }) => {
       <div className="maincategory">
         <div className="list-name">
           <h6>
-            <b>Category Name</b>
+            <b>Book Name</b>
           </h6>
         </div>
         <div className="list-name">
@@ -89,11 +84,11 @@ const Listcategory = ({ setdetails }) => {
         </div>
       </div>
 
-      {category?.map((item) => {
+      {book?.map((item) => {
         return (
           <div className="maincategory">
             <div className="list-name">
-              <h6>{item.categoryName}</h6>
+              <h6>{item.bookName}</h6>
             </div>
             <div className="list-name">
               <h6>
@@ -126,4 +121,4 @@ const Listcategory = ({ setdetails }) => {
   );
 };
 
-export default Listcategory;
+export default ListBook;

@@ -2,13 +2,13 @@ import React from "react";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { GlobalContext } from "../../Context";
-import CategoryIcon from "@mui/icons-material/Category";
-import "./categoread.css";
+import "./Author.css";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import Createcategory from "./createCategory/Createcategory";
-import Listcategory from "./ListCategory/Listcategory";
-import Updatepage from "./updatepage/Updatepage";
+import Createauthor from "./createAuthor/Createauthor";
+import Listauthor from "./Listauthor/Listauthor";
+import UpdateAuthor from "./UpdateAuthor/UpdateAuthor";
+import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
 
 function Copyright(props) {
   return (
@@ -28,12 +28,11 @@ function Copyright(props) {
   );
 }
 
-const Category = () => {
+const Author = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [page, setPage] = useState(false);
   const [details, setdetails] = useState(false);
-
   return (
     <div>
       {state?.user === null ? (
@@ -42,12 +41,12 @@ const Category = () => {
         <div className="categoryMain">
           <div className="profileDiv">
             <div className="userHead">
-              <h2> Category Management</h2>
+              <h2> Author Management</h2>
             </div>
 
             <div className="setting-haed">
               <h5>
-                <a href="#"> Dashboard</a> <span>/ Category Management</span>
+                <a href="#"> Dashboard</a> <span>/ Author Management</span>
               </h5>
             </div>
             {!page && (
@@ -56,7 +55,7 @@ const Category = () => {
                   <div className="edit-setting-hadding">
                     <h5>
                       {" "}
-                      <CategoryIcon /> Category Management
+                      <CalendarViewMonthIcon /> Author Management
                     </h5>
                   </div>
                   <div className="btn-con">
@@ -68,11 +67,11 @@ const Category = () => {
               </div>
             )}
             {page ? (
-              <Createcategory />
+              <Createauthor />
             ) : details ? (
-              <Updatepage details={details} />
+              <UpdateAuthor details={details} />
             ) : (
-              <Listcategory setdetails={setdetails} />
+              <Listauthor setdetails={setdetails} />
             )}
           </div>
           <Copyright sx={{ mt: 8, mb: 4 }} />
@@ -82,4 +81,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Author;

@@ -58,9 +58,194 @@ const categorySchema = new mongoose.Schema({
   status: { type: Boolean, default: true },
   uid: { type: String },
   createdOn: { type: Date, default: Date.now },
-  // updatedAt: { type: Date },
+  updatedAt: { type: Date },
 });
 const categoryModel = mongoose.model("category", categorySchema);
+
+///////////////author schema//////////
+const authorSchema = new mongoose.Schema({
+  authorName: { type: String, required: true },
+  status: { type: Boolean, default: true },
+  uid: { type: String },
+  createdOn: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
+});
+const authorModel = mongoose.model("author", authorSchema);
+///////////////Location Rack schema//////////
+const locationRackSchema = new mongoose.Schema({
+  locationRackName: { type: String, required: true },
+  status: { type: Boolean, default: true },
+  uid: { type: String },
+  createdOn: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
+});
+const locationRackModel = mongoose.model("locationrack", locationRackSchema);
+///////////////books schema//////////
+const bookSchema = new mongoose.Schema({
+  bookName: { type: String, required: true },
+  status: { type: Boolean, default: true },
+  uid: { type: String },
+  createdOn: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
+});
+const bookModel = mongoose.model("book", bookSchema);
+////////////book post////////////////
+app.post("/book", (req, res) => {
+  let body = req.body;
+
+  bookModel.findOne({ email: body.email }, (err, author) => {
+    if (!err) {
+      bookModel
+        .create({
+          bookName: body.bookName,
+          uid: body.uid,
+        })
+        .then((resss) => {
+          res.status(200).send({ message: "location Rack is created" });
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          res.status(500).send({ message: "internal server error" });
+        });
+    }
+  });
+});
+////////////location getdata////////////////
+app.get("/books/:uid", async (req, res) => {
+  try {
+    let data = await bookModel.find({ uid: req.params.uid }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting data" });
+  }
+});
+///////////book update//////////////
+app.put("/book/:cid", async (req, res) => {
+  const update = {};
+
+  if (req.body.bookName) update.bookName = req.body.bookName;
+  update.updatedAt = Date.now();
+
+  try {
+    const updated = await bookModel
+      .findOneAndUpdate({ _id: req.params.cid }, update, { new: true })
+      .exec();
+
+    res.send({
+      message: "book updated successfuly",
+      book: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadated",
+    });
+  }
+});
+////////////location post////////////////
+app.post("/locationRack", (req, res) => {
+  let body = req.body;
+
+  locationRackModel.findOne({ email: body.email }, (err, author) => {
+    if (!err) {
+      locationRackModel
+        .create({
+          locationRackName: body.locationRackName,
+          uid: body.uid,
+        })
+        .then((resss) => {
+          res.status(200).send({ message: "location Rack is created" });
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          res.status(500).send({ message: "internal server error" });
+        });
+    }
+  });
+});
+////////////location getdata////////////////
+app.get("/locationRacks/:uid", async (req, res) => {
+  try {
+    let data = await locationRackModel.find({ uid: req.params.uid }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting data" });
+  }
+});
+///////////location update//////////////
+app.put("/locationRack/:cid", async (req, res) => {
+  const update = {};
+
+  if (req.body.locationRackName)
+    update.locationRackName = req.body.locationRackName;
+  update.updatedAt = Date.now();
+
+  try {
+    const updated = await locationRackModel
+      .findOneAndUpdate({ _id: req.params.cid }, update, { new: true })
+      .exec();
+
+    res.send({
+      message: "Location Rack updated successfuly",
+      author: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadated",
+    });
+  }
+});
+////////////author post////////////////
+app.post("/author", (req, res) => {
+  let body = req.body;
+
+  authorModel.findOne({ email: body.email }, (err, author) => {
+    if (!err) {
+      authorModel
+        .create({
+          authorName: body.authorName,
+          uid: body.uid,
+        })
+        .then((resss) => {
+          res.status(200).send({ message: "Author is created" });
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          res.status(500).send({ message: "internal server error" });
+        });
+    }
+  });
+});
+////////////category getdata////////////////
+app.get("/authors/:uid", async (req, res) => {
+  try {
+    let data = await authorModel.find({ uid: req.params.uid }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting data" });
+  }
+});
+///////////categoryupdate//////////////
+app.put("/author/:cid", async (req, res) => {
+  const update = {};
+
+  if (req.body.authorName) update.authorName = req.body.authorName;
+  update.updatedAt = Date.now();
+
+  try {
+    const updated = await authorModel
+      .findOneAndUpdate({ _id: req.params.cid }, update, { new: true })
+      .exec();
+
+    res.send({
+      message: "author updated successfuly",
+      author: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate author",
+    });
+  }
+});
 ////////////category////////////////
 app.post("/category", (req, res) => {
   let body = req.body;
@@ -91,11 +276,12 @@ app.get("/categorys/:uid", async (req, res) => {
     res.status(500).send({ message: "error getting categorydata" });
   }
 });
-
+///////////categoryupdate//////////////
 app.put("/category/:cid", async (req, res) => {
   const update = {};
 
   if (req.body.categoryName) update.categoryName = req.body.categoryName;
+  update.updatedAt = Date.now();
 
   try {
     const updated = await categoryModel
@@ -106,7 +292,6 @@ app.put("/category/:cid", async (req, res) => {
       message: "category updated successfuly",
       category: updated,
     });
-    console.log("🚀 ~ updated", updated);
   } catch (error) {
     res.status(500).send({
       message: "faild to upadate category",

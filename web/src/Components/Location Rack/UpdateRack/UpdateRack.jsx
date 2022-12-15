@@ -1,37 +1,35 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import axios from "axios";
 import { useContext } from "react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { GlobalContext } from "../../../Context";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Updatepage = ({ details }) => {
+const UpdateRack = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
 
   const formik = useFormik({
     initialValues: {
-      categoryName: details.categoryName,
+      locationRackName: details.locationRackName,
     },
     validationSchema: yup.object({
-      categoryName: yup
-        .string("Enter your categoryName")
-        .required("categoryName is required"),
+      locationRackName: yup
+        .string("Enter your locationRackName")
+        .required("locationRackName is required"),
     }),
 
     onSubmit: async (value) => {
       try {
         const update = await axios.put(
-          `${state.baseUrl}/category/${details._id}`,
+          `${state.baseUrl}/locationRack/${details._id}`,
           {
-            categoryName: value?.categoryName,
+            locationRackName: value?.locationRackName,
           }
         );
 
-        toast.success("Updated category", {
+        toast.success("Updated Author", {
           position: toast.POSITION.TOP_CENTER,
         });
       } catch (e) {
@@ -46,7 +44,7 @@ const Updatepage = ({ details }) => {
       <div className="main-addww">
         <h6>
           <PersonAddAltIcon />
-          Edit Category Details
+          Edit Location Rack Details
         </h6>
       </div>
       <form
@@ -56,17 +54,17 @@ const Updatepage = ({ details }) => {
         }}
       >
         <div className="settingInput">
-          <h5>Category Name</h5>
+          <h5>Location Rack Name</h5>
           <input
             className="settingField"
             type="text"
-            name="categoryName"
-            value={formik.values.categoryName}
+            name="locationRackName"
+            value={formik.values.locationRackName}
             onChange={formik.handleChange}
           />
         </div>
-        {formik.touched.categoryName && formik.errors.categoryName ? (
-          <div className="errorMessage">{formik.errors.categoryName}</div>
+        {formik.touched.locationRackName && formik.errors.locationRackName ? (
+          <div className="errorMessage">{formik.errors.locationRackName}</div>
         ) : null}
 
         <div className="btn-Edit">
@@ -79,4 +77,4 @@ const Updatepage = ({ details }) => {
   );
 };
 
-export default Updatepage;
+export default UpdateRack;

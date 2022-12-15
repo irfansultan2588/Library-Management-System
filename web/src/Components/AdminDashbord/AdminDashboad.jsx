@@ -20,6 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { GlobalContext } from "../../Context";
 import { useContext } from "react";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 
 import {
   CDBSidebar,
@@ -34,6 +35,9 @@ import Profile from "../profile/Profile";
 import Setting from "../Setting/Setting";
 import Logout from "../LogOut/Logout";
 import Category from "../Category/Category";
+import Author from "../Author/Author";
+import LocationRack from "../Location Rack/LocationRack";
+import Book from "../Books/Book";
 
 const AdminDashboad = () => {
   let { state, dispatch } = useContext(GlobalContext);
@@ -90,6 +94,12 @@ const AdminDashboad = () => {
         return <Setting />;
       case "category":
         return <Category />;
+      case "author":
+        return <Author />;
+      case "locationRack":
+        return <LocationRack />;
+      case "book":
+        return <Book />;
       case "logout":
         return <CommonCard />;
       default:
@@ -200,17 +210,38 @@ const AdminDashboad = () => {
                   Category
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/profile" activeClassName="activeClicked">
+              <NavLink
+                exact
+                to="/dashboard/author"
+                activeClassName="activeClicked"
+              >
                 <CDBSidebarMenuItem>
+                  {" "}
                   <EditIcon className="icons" />
                   Author
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/analytics" activeClassName="activeClicked">
+              <NavLink
+                exact
+                to="/dashboard/locationRack"
+                activeClassName="activeClicked"
+              >
                 <CDBSidebarMenuItem>
                   {" "}
                   <LocationSearchingRoundedIcon className="icons" />
                   Location Rack
+                </CDBSidebarMenuItem>
+              </NavLink>
+
+              <NavLink
+                exact
+                to="/dashboard/book"
+                activeClassName="activeClicked"
+              >
+                <CDBSidebarMenuItem>
+                  {" "}
+                  <MenuBookIcon className="icons" />
+                  Book
                 </CDBSidebarMenuItem>
               </NavLink>
 

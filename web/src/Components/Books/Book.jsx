@@ -1,14 +1,13 @@
 import React from "react";
 import { useContext } from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { GlobalContext } from "../../Context";
-import CategoryIcon from "@mui/icons-material/Category";
-import "./categoread.css";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import Createcategory from "./createCategory/Createcategory";
-import Listcategory from "./ListCategory/Listcategory";
-import Updatepage from "./updatepage/Updatepage";
+import CreateBook from "./CreateBook/CreateBook";
+import ListBook from "./ListBook/ListBook";
+import UpdateBook from "./Update Book/UpdateBook";
+import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
 
 function Copyright(props) {
   return (
@@ -28,7 +27,7 @@ function Copyright(props) {
   );
 }
 
-const Category = () => {
+const Book = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [page, setPage] = useState(false);
@@ -42,12 +41,12 @@ const Category = () => {
         <div className="categoryMain">
           <div className="profileDiv">
             <div className="userHead">
-              <h2> Category Management</h2>
+              <h2>Book Management</h2>
             </div>
 
             <div className="setting-haed">
               <h5>
-                <a href="#"> Dashboard</a> <span>/ Category Management</span>
+                <a href="#"> Dashboard</a> <span>/ Book Management</span>
               </h5>
             </div>
             {!page && (
@@ -56,7 +55,8 @@ const Category = () => {
                   <div className="edit-setting-hadding">
                     <h5>
                       {" "}
-                      <CategoryIcon /> Category Management
+                      <CalendarViewMonthIcon />
+                      Book Management
                     </h5>
                   </div>
                   <div className="btn-con">
@@ -68,11 +68,11 @@ const Category = () => {
               </div>
             )}
             {page ? (
-              <Createcategory />
+              <CreateBook />
             ) : details ? (
-              <Updatepage details={details} />
+              <UpdateBook details={details} />
             ) : (
-              <Listcategory setdetails={setdetails} />
+              <ListBook setdetails={setdetails} />
             )}
           </div>
           <Copyright sx={{ mt: 8, mb: 4 }} />
@@ -82,4 +82,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Book;

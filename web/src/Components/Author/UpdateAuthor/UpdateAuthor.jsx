@@ -6,32 +6,31 @@ import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import { GlobalContext } from "../../../Context";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const Updatepage = ({ details }) => {
+const UpdateAuthor = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
 
   const formik = useFormik({
     initialValues: {
-      categoryName: details.categoryName,
+      authorName: details.authorName,
     },
     validationSchema: yup.object({
-      categoryName: yup
-        .string("Enter your categoryName")
-        .required("categoryName is required"),
+      authorName: yup
+        .string("Enter your authorName")
+        .required("authorName is required"),
     }),
 
     onSubmit: async (value) => {
       try {
         const update = await axios.put(
-          `${state.baseUrl}/category/${details._id}`,
+          `${state.baseUrl}/author/${details._id}`,
           {
-            categoryName: value?.categoryName,
+            authorName: value?.authorName,
           }
         );
 
-        toast.success("Updated category", {
+        toast.success("Updated Author", {
           position: toast.POSITION.TOP_CENTER,
         });
       } catch (e) {
@@ -46,7 +45,7 @@ const Updatepage = ({ details }) => {
       <div className="main-addww">
         <h6>
           <PersonAddAltIcon />
-          Edit Category Details
+          Edit Author Details
         </h6>
       </div>
       <form
@@ -56,17 +55,17 @@ const Updatepage = ({ details }) => {
         }}
       >
         <div className="settingInput">
-          <h5>Category Name</h5>
+          <h5>Author Name</h5>
           <input
             className="settingField"
             type="text"
-            name="categoryName"
-            value={formik.values.categoryName}
+            name="authorName"
+            value={formik.values.authorName}
             onChange={formik.handleChange}
           />
         </div>
-        {formik.touched.categoryName && formik.errors.categoryName ? (
-          <div className="errorMessage">{formik.errors.categoryName}</div>
+        {formik.touched.authorName && formik.errors.authorName ? (
+          <div className="errorMessage">{formik.errors.authorName}</div>
         ) : null}
 
         <div className="btn-Edit">
@@ -79,4 +78,4 @@ const Updatepage = ({ details }) => {
   );
 };
 
-export default Updatepage;
+export default UpdateAuthor;
