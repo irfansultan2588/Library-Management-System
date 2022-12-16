@@ -83,6 +83,11 @@ const locationRackModel = mongoose.model("locationrack", locationRackSchema);
 ///////////////books schema//////////
 const bookSchema = new mongoose.Schema({
   bookName: { type: String, required: true },
+  author: { type: String, required: true },
+  category: { type: String, required: true },
+  locationRack: { type: String, required: true },
+  bookIsbnNumber: { type: Number, required: true },
+  bookCopy: { type: Number, required: true },
   status: { type: Boolean, default: true },
   uid: { type: String },
   createdOn: { type: Date, default: Date.now },
@@ -90,14 +95,19 @@ const bookSchema = new mongoose.Schema({
 });
 const bookModel = mongoose.model("book", bookSchema);
 ////////////book post////////////////
-app.post("/book", (req, res) => {
+app.post("/createbook", (req, res) => {
   let body = req.body;
 
-  bookModel.findOne({ email: body.email }, (err, author) => {
+  bookModel.findOne({ email: body.email }, (err, book) => {
     if (!err) {
       bookModel
         .create({
           bookName: body.bookName,
+          author: body.author,
+          category: body.category,
+          locationRack: body.locationRack,
+          bookIsbnNumber: body.bookIsbnNumber,
+          bookCopy: body.bookCopy,
           uid: body.uid,
         })
         .then((resss) => {
@@ -124,6 +134,11 @@ app.put("/book/:cid", async (req, res) => {
   const update = {};
 
   if (req.body.bookName) update.bookName = req.body.bookName;
+  if (req.body.author) update.author = req.body.author;
+  if (req.body.category) update.category = req.body.category;
+  if (req.body.locationRack) update.locationRack = req.body.locationRack;
+  if (req.body.bookIsbnNumber) update.bookIsbnNumber = req.body.bookIsbnNumber;
+  if (req.body.bookCopy) update.bookCopy = req.body.bookCopy;
   update.updatedAt = Date.now();
 
   try {

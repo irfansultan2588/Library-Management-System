@@ -9,26 +9,26 @@ const ListBook = ({ setdetails }) => {
   const [updatpage, setupdatpage] = useState(false);
   const [book, getBook] = useState([]);
 
-  useEffect(() => {
-    const getBook = async () => {
-      try {
-        let response = await axios({
-          url: `${state.baseUrl}/books/${state?.user?.data?._id}`,
-          method: "get",
-          withCredentials: true,
-        });
+  // useEffect(() => {
+  //   const getBook = async () => {
+  //     try {
+  //       let response = await axios({
+  //         url: `${state.baseUrl}/books/${state?.user?.data?._id}`,
+  //         method: "get",
+  //         withCredentials: true,
+  //       });
 
-        if (response.status === 200) {
-          getBook(response?.data);
-        } else {
-          console.log("error in api call");
-        }
-      } catch (e) {
-        console.log("Error in api", e);
-      }
-    };
-    getBook();
-  }, []);
+  //       if (response.status === 200) {
+  //         getBook(response?.data);
+  //       } else {
+  //         console.log("error in api call");
+  //       }
+  //     } catch (e) {
+  //       console.log("Error in api", e);
+  //     }
+  //   };
+  //   getBook();
+  // }, []);
   return (
     <>
       <div className="seletInput">

@@ -1,0 +1,16 @@
+.main-book {
+  width: 100%;
+}
+.main-book-from {
+  display: flex;
+}
+.bookInput {
+  width: 100%;
+  padding: 5px;
+  margin-top: 10px;
+}
+.bookField {
+  width: 99%;
+  padding: 5px;
+  border: 1px solid lightgray;
+}
