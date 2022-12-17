@@ -65,7 +65,10 @@ const CreateBook = () => {
   const formik = useFormik({
     initialValues: {
       bookName: "",
-      author: "",
+      author: {
+        authorName: "",
+        _id: "",
+      },
       category: "",
       locationRack: "",
       bookIsbnNumber: "",
@@ -84,7 +87,6 @@ const CreateBook = () => {
     }),
 
     onSubmit: async (values, { resetForm }) => {
-      console.log("🚀 ~ values", values);
       axios({
         method: "post",
         url: `${state.baseUrl}/createbook `,
@@ -107,6 +109,7 @@ const CreateBook = () => {
           resetForm();
           //   navigate("/dashboard/Author");
           setToggleRefresh(!toggleRefresh);
+          console.log("🚀 ~ values", values);
         })
         .catch((err) => {
           toast.error("Creating Error", {
@@ -156,7 +159,19 @@ const CreateBook = () => {
                 Select Author
               </option>
               {authorData.map((val) => {
-                return <option value={authorData._id}>{val.authorName}</option>;
+                return (
+                  <>
+                    {" "}
+                    <option
+                      key={val._id}
+                      value={`{ id : ${val._id}, authorName :${val.authorName}}`}
+                    >
+                      {val.authorName}
+                    </option>
+                    {/* <Option value={(item.id, item.value)}>{item.name}</Option>; */}
+                    {/* <option value={authorData._id}>{val._id}</option> */}
+                  </>
+                );
               })}
             </select>
           </div>

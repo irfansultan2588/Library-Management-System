@@ -83,9 +83,12 @@ const locationRackModel = mongoose.model("locationrack", locationRackSchema);
 ///////////////books schema//////////
 const bookSchema = new mongoose.Schema({
   bookName: { type: String, required: true },
-  author: { type: String, required: true },
-  category: { type: String, required: true },
-  locationRack: { type: String, required: true },
+  author: {
+    authorName: { type: String },
+    _id: { type: String },
+  },
+  category: { type: String },
+  locationRack: { type: String },
   bookIsbnNumber: { type: Number, required: true },
   bookCopy: { type: Number, required: true },
   status: { type: Boolean, default: true },
@@ -111,7 +114,7 @@ app.post("/createbook", (req, res) => {
           uid: body.uid,
         })
         .then((resss) => {
-          res.status(200).send({ message: "location Rack is created" });
+          res.status(200).send({ message: "Book is created" });
         })
         .catch((err) => {
           console.log(err, "err");
