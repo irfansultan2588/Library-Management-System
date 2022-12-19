@@ -69,8 +69,14 @@ const CreateBook = () => {
         authorName: "",
         _id: "",
       },
-      category: "",
-      locationRack: "",
+      category: {
+        categoryName: "",
+        _id: "",
+      },
+      locationRack: {
+        locationRackName: "",
+        _id: "",
+      },
       bookIsbnNumber: "",
       bookCopy: "",
     },
@@ -92,9 +98,9 @@ const CreateBook = () => {
         url: `${state.baseUrl}/createbook `,
         data: {
           bookName: values?.bookName,
-          author: values?.author,
-          category: values?.category,
-          locationRack: values?.locationRack,
+          author: JSON.parse(values?.author),
+          category: JSON.parse(values?.category),
+          locationRack: JSON.parse(values?.locationRack),
           bookIsbnNumber: values?.bookIsbnNumber,
           bookCopy: values?.bookCopy,
           uid,
@@ -109,7 +115,6 @@ const CreateBook = () => {
           resetForm();
           //   navigate("/dashboard/Author");
           setToggleRefresh(!toggleRefresh);
-          console.log("🚀 ~ values", values);
         })
         .catch((err) => {
           toast.error("Creating Error", {
@@ -164,12 +169,10 @@ const CreateBook = () => {
                     {" "}
                     <option
                       key={val._id}
-                      value={`{ id : ${val._id}, authorName :${val.authorName}}`}
+                      value={`{ "_id": "${val._id}", "authorName":"${val.authorName}"}`}
                     >
                       {val.authorName}
                     </option>
-                    {/* <Option value={(item.id, item.value)}>{item.name}</Option>; */}
-                    {/* <option value={authorData._id}>{val._id}</option> */}
                   </>
                 );
               })}
@@ -189,7 +192,12 @@ const CreateBook = () => {
               </option>
               {categoryData.map((val) => {
                 return (
-                  <option value={categoryData._id}>{val.categoryName}</option>
+                  <option
+                    key={val._id}
+                    value={`{ "_id": "${val._id}", "categoryName":"${val.categoryName}"}`}
+                  >
+                    {val.categoryName}
+                  </option>
                 );
               })}
             </select>
@@ -207,7 +215,11 @@ const CreateBook = () => {
               </option>
               {rackData.map((val) => {
                 return (
-                  <option value={rackData._id}>{val.locationRackName}</option>
+                  <option
+                    value={`{ "_id": "${val._id}", "locationRackName":"${val.locationRackName}"}`}
+                  >
+                    {val.locationRackName}
+                  </option>
                 );
               })}
             </select>

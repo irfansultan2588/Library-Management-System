@@ -1,0 +1,15 @@
+.user {
+  margin-left: 3px;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+.mainprofile {
+  width: 98.5%;
+  display: flex;
+  margin-left: 10px;
+}
+.list-profile {
+  width: 18%;
+  border: 1px solid lightgray;
+  padding: 5px 0px 0px 5px;
+}

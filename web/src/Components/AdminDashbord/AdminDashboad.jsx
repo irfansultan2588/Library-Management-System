@@ -38,6 +38,7 @@ import Category from "../Category/Category";
 import Author from "../Author/Author";
 import LocationRack from "../Location Rack/LocationRack";
 import Book from "../Books/Book";
+import RegisterUser from "../RegisterUser/RegisterUser";
 
 const AdminDashboad = () => {
   let { state, dispatch } = useContext(GlobalContext);
@@ -100,6 +101,8 @@ const AdminDashboad = () => {
         return <LocationRack />;
       case "book":
         return <Book />;
+      case "registerUser":
+        return <RegisterUser />;
       case "logout":
         return <CommonCard />;
       default:
@@ -247,23 +250,23 @@ const AdminDashboad = () => {
 
               <NavLink
                 exact
-                to="/hero404"
-                target="_blank"
+                to="/dashboard/registerUser"
                 activeClassName="activeClicked"
               >
                 <CDBSidebarMenuItem>
                   <GroupIcon className="icons" />
                   Register User
                 </CDBSidebarMenuItem>
-                <CDBSidebarMenuItem>
-                  <LocalLibraryIcon className="icons" />
-                  Issue Book
-                </CDBSidebarMenuItem>
-                <CDBSidebarMenuItem>
-                  <LogoutIcon className="icons" />
-                  Logout
-                </CDBSidebarMenuItem>
               </NavLink>
+
+              <CDBSidebarMenuItem>
+                <LocalLibraryIcon className="icons" />
+                Issue Book
+              </CDBSidebarMenuItem>
+              <CDBSidebarMenuItem>
+                <LogoutIcon className="icons" />
+                Logout
+              </CDBSidebarMenuItem>
             </CDBSidebarMenu>
           </CDBSidebarContent>
         </CDBSidebar>

@@ -31,8 +31,10 @@ const userSchema = new mongoose.Schema({
   address: { type: String, required: true },
   contactNo: { type: Number, required: true },
   verify: { type: Boolean, default: false },
+  status: { type: Boolean, default: true },
   otp: { type: String },
   createdOn: { type: Date, default: Date.now },
+  updatedAt: { type: Date },
 });
 const userModel = mongoose.model("user", userSchema);
 
@@ -83,12 +85,19 @@ const locationRackModel = mongoose.model("locationrack", locationRackSchema);
 ///////////////books schema//////////
 const bookSchema = new mongoose.Schema({
   bookName: { type: String, required: true },
+
   author: {
     authorName: { type: String },
     _id: { type: String },
   },
-  category: { type: String },
-  locationRack: { type: String },
+  category: {
+    categoryName: { type: String },
+    _id: { type: String },
+  },
+  locationRack: {
+    locationRackName: { type: String },
+    _id: { type: String },
+  },
   bookIsbnNumber: { type: Number, required: true },
   bookCopy: { type: Number, required: true },
   status: { type: Boolean, default: true },
@@ -575,6 +584,7 @@ app.put("/profile/:id", async (req, res) => {
   const update = {};
   if (req.body.email) update.email = req.body.email;
   if (req.body.password) update.password = req.body.password;
+  update.updatedAt = Date.now();
 
   try {
     const updated = await userModel

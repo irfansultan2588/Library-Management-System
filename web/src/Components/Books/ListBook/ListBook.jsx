@@ -7,28 +7,28 @@ import axios from "axios";
 const ListBook = ({ setdetails }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [updatpage, setupdatpage] = useState(false);
-  const [book, getBook] = useState([]);
+  const [book, setgetBook] = useState([]);
 
-  // useEffect(() => {
-  //   const getBook = async () => {
-  //     try {
-  //       let response = await axios({
-  //         url: `${state.baseUrl}/books/${state?.user?.data?._id}`,
-  //         method: "get",
-  //         withCredentials: true,
-  //       });
+  useEffect(() => {
+    const getBook = async () => {
+      try {
+        let response = await axios({
+          url: `${state.baseUrl}/books/${state?.user?.data?._id}`,
+          method: "get",
+          withCredentials: true,
+        });
 
-  //       if (response.status === 200) {
-  //         getBook(response?.data);
-  //       } else {
-  //         console.log("error in api call");
-  //       }
-  //     } catch (e) {
-  //       console.log("Error in api", e);
-  //     }
-  //   };
-  //   getBook();
-  // }, []);
+        if (response.status === 200) {
+          setgetBook(response?.data);
+        } else {
+          console.log("error in api call");
+        }
+      } catch (e) {
+        console.log("Error in api", e);
+      }
+    };
+    getBook();
+  }, []);
   return (
     <>
       <div className="seletInput">
@@ -64,6 +64,31 @@ const ListBook = ({ setdetails }) => {
         </div>
         <div className="list-name">
           <h6>
+            <b>ISBN NO.</b>
+          </h6>
+        </div>
+        <div className="list-name">
+          <h6>
+            <b>Category</b>
+          </h6>
+        </div>
+        <div className="list-name">
+          <h6>
+            <b>Author</b>
+          </h6>
+        </div>
+        <div className="list-name">
+          <h6>
+            <b>Location Rack</b>
+          </h6>
+        </div>
+        <div className="list-name">
+          <h6>
+            <b>No. Of Copy</b>
+          </h6>
+        </div>
+        <div className="list-name">
+          <h6>
             <b>Status</b>
           </h6>
         </div>
@@ -89,6 +114,21 @@ const ListBook = ({ setdetails }) => {
           <div className="maincategory">
             <div className="list-name">
               <h6>{item.bookName}</h6>
+            </div>
+            <div className="list-name">
+              <h6>{item.bookIsbnNumber}</h6>
+            </div>
+            <div className="list-name">
+              <h6>{item.category.categoryName}</h6>
+            </div>
+            <div className="list-name">
+              <h6>{item.author.authorName}</h6>
+            </div>
+            <div className="list-name">
+              <h6>{item.locationRack.locationRackName}</h6>
+            </div>
+            <div className="list-name">
+              <h6>{item.bookCopy}</h6>
             </div>
             <div className="list-name">
               <h6>
