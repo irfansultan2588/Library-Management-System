@@ -88,10 +88,10 @@ const UpdateBook = ({ details }) => {
       try {
         const update = await axios.put(`${state.baseUrl}/book/${details._id}`, {
           bookName: values?.bookName,
-          authorName: JSON.parse(values?.authorName),
+          authorName: values?.authorName,
           category: JSON.parse(values?.category),
           locationRack: JSON.parse(values?.locationRack),
-          bookIsbnNumber: values?.bookIsbnNumber,
+          bookIsbnNumber: JSON.parse(values?.bookIsbnNumber),
           bookCopy: values?.bookCopy,
         });
 
@@ -188,10 +188,10 @@ const UpdateBook = ({ details }) => {
                 );
               })}
             </select>
-            {formik.touched.category && formik.errors.category ? (
-              <div className="errorMessage">{formik.errors.category}</div>
-            ) : null}
           </div>
+          {formik.touched.category && formik.errors.category ? (
+            <div className="errorMessage">{formik.errors.category}</div>
+          ) : null}
 
           <div className="bookInput">
             <h5>Select Location Rack</h5>

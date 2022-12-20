@@ -69,19 +69,24 @@ const RegisterUser = () => {
                 <a href="#"> Dashboard</a> <span>/ User Management</span>
               </h5>
             </div>
-
-            <div className="from-man">
-              <div className="main-category">
-                <div className="edit-setting-hadding">
-                  <h5>
-                    {" "}
-                    <CalendarViewMonthIcon />
-                    <span className="user"> User Management</span>
-                  </h5>
+            {!page && (
+              <div className="from-man">
+                <div className="main-category">
+                  <div className="edit-setting-hadding">
+                    <h5>
+                      {" "}
+                      <CalendarViewMonthIcon />
+                      <span className="user"> User Management</span>
+                    </h5>
+                  </div>
+                  <div className="btn-con">
+                    <button className="btn-add" onClick={() => setPage(true)}>
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-
+            )}
             {/* /////////////////// */}
 
             <div className="seletInput">

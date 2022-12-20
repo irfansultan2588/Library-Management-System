@@ -106,6 +106,49 @@ const bookSchema = new mongoose.Schema({
   updatedAt: { type: Date },
 });
 const bookModel = mongoose.model("book", bookSchema);
+
+///////////////issue book schema//////////
+const issueBookSchema = new mongoose.Schema({
+  bookIsbnNumber: { type: Number, required: true },
+  uniqueID: { type: String, required: true },
+  status: { type: Boolean, default: true },
+  uid: { type: String },
+  issueDate: { type: Date, default: Date.now },
+  returnDate: { type: Date },
+});
+const issueBookModel = mongoose.model("issuebook", issueBookSchema);
+
+////////////Issue book post////////////////
+app.post("/issuebook", (req, res) => {
+  let body = req.body;
+
+  issueBookModel.findOne({ email: body.email }, (err, book) => {
+    if (!err) {
+      issueBookModel
+        .create({
+          bookIsbnNumber: body.bookIsbnNumber,
+          uniqueID: body.uniqueID,
+          uid: body.uid,
+        })
+        .then((resss) => {
+          res.status(200).send({ message: "Issued Book" });
+        })
+        .catch((err) => {
+          console.log(err, "err");
+          res.status(500).send({ message: "internal server error" });
+        });
+    }
+  });
+});
+////////////Issue book get data////////////////
+app.get("/issuebook/:uid", async (req, res) => {
+  try {
+    let data = await issueBookModel.find({ uid: req.params.uid }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting data" });
+  }
+});
 ////////////book post////////////////
 app.post("/createbook", (req, res) => {
   let body = req.body;
@@ -132,7 +175,7 @@ app.post("/createbook", (req, res) => {
     }
   });
 });
-////////////location getdata////////////////
+////////////Books get data////////////////
 app.get("/books/:uid", async (req, res) => {
   try {
     let data = await bookModel.find({ uid: req.params.uid }).exec();

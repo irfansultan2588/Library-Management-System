@@ -39,6 +39,8 @@ import Author from "../Author/Author";
 import LocationRack from "../Location Rack/LocationRack";
 import Book from "../Books/Book";
 import RegisterUser from "../RegisterUser/RegisterUser";
+import IssueBook from "../Issue Book/IssueBook";
+import Home from "../Home/Home";
 
 const AdminDashboad = () => {
   let { state, dispatch } = useContext(GlobalContext);
@@ -60,23 +62,23 @@ const AdminDashboad = () => {
     setAuth(null);
   };
 
-  // const logouthandler = async () => {
-  //   try {
-  //     let response = await axios.post(
-  //       `${state.baseUrl}/logout`,
-  //       {},
+  const logouthandler = async () => {
+    try {
+      let response = await axios.post(
+        `${state.baseUrl}/logout`,
+        {},
 
-  //       {
-  //         withCredentials: true,
-  //       }
-  //     );
-  //     console.log("response", response.data);
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("response", response.data);
 
-  //     dispatch({ type: "USER_LOGOUT" });
-  //   } catch (e) {
-  //     console.log("Error in api", e);
-  //   }
-  // };
+      dispatch({ type: "USER_LOGOUT" });
+    } catch (e) {
+      console.log("Error in api", e);
+    }
+  };
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     ...theme.typography.body2,
@@ -103,8 +105,10 @@ const AdminDashboad = () => {
         return <Book />;
       case "registerUser":
         return <RegisterUser />;
+      case "issuebook":
+        return <IssueBook />;
       case "logout":
-        return <CommonCard />;
+        return <Home />;
       default:
         return "Page Not Found";
     }
@@ -172,9 +176,7 @@ const AdminDashboad = () => {
                   <MenuItem onClick={() => navigetTo("/dashboard/setting")}>
                     Setting{" "}
                   </MenuItem>
-                  <MenuItem onClick={() => navigetTo("/dashboard/home")}>
-                    Logout
-                  </MenuItem>
+                  <MenuItem onClick={logouthandler}>Logout</MenuItem>
                 </Menu>
               </div>
             )}
@@ -258,15 +260,22 @@ const AdminDashboad = () => {
                   Register User
                 </CDBSidebarMenuItem>
               </NavLink>
-
-              <CDBSidebarMenuItem>
-                <LocalLibraryIcon className="icons" />
-                Issue Book
-              </CDBSidebarMenuItem>
-              <CDBSidebarMenuItem>
-                <LogoutIcon className="icons" />
-                Logout
-              </CDBSidebarMenuItem>
+              <NavLink
+                exact
+                to="/dashboard/issuebook"
+                activeClassName="activeClicked"
+              >
+                <CDBSidebarMenuItem>
+                  <LocalLibraryIcon className="icons" />
+                  Issue Book
+                </CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/" activeClassName="activeClicked">
+                <CDBSidebarMenuItem>
+                  <LogoutIcon className="icons" />
+                  Logout
+                </CDBSidebarMenuItem>
+              </NavLink>
             </CDBSidebarMenu>
           </CDBSidebarContent>
         </CDBSidebar>

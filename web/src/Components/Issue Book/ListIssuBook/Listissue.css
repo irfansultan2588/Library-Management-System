@@ -1,0 +1,17 @@
+.btn-Issue {
+  background-color: goldenrod;
+  border: none;
+  color: #fff;
+  padding: 3px 8px 3px 8px;
+}
+.btn-View {
+  background-color: blue;
+  border: none;
+  color: #fff;
+  padding: 5px 8px 5px 8px;
+}
+.btn-view {
+  background-color: #24a0ed;
+  border: none;
+  padding: 5px 8px 5px 8px;
+}
