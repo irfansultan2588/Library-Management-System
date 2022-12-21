@@ -1,79 +1,182 @@
 import React from "react";
 import axios from "axios";
-import { useContext } from "react";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../../Context";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import "./viewDetails.css";
 
 const ViewIssue = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
-  //   const formik = useFormik({
-  //     initialValues: {
-  //       locationRackName: details.locationRackName,
-  //     },
-  //     validationSchema: yup.object({
-  //       locationRackName: yup
-  //         .string("Enter your locationRackName")
-  //         .required("locationRackName is required"),
-  //     }),
+  const [bookData, setbookData] = useState([]);
+  const [profileData, setprofileData] = useState([]);
+  const [issuebookData, setissuebookData] = useState([]);
 
-  //     onSubmit: async (value) => {
-  //       try {
-  //         const update = await axios.put(
-  //           `${state.baseUrl}/locationRack/${details._id}`,
-  //           {
-  //             locationRackName: value?.locationRackName,
-  //           }
-  //         );
+  useEffect(() => {
+    const getdata = async () => {
+      try {
+        let responseUser = await axios({
+          url: `${state.baseUrl}/userdata/${details?.uniqueID}/${details?.bookIsbnNumber}`,
+          method: "get",
+          withCredentials: true,
+        });
 
-  //         toast.success("Updated Author", {
-  //           position: toast.POSITION.TOP_CENTER,
-  //         });
-  //       } catch (e) {
-  //         toast.error("Updated Error", {
-  //           position: toast.POSITION.TOP_CENTER,
-  //         });
-  //       }
-  //     },
-  //   });
+        if (responseUser.status === 200) {
+          setprofileData(responseUser.data);
+        } else {
+          console.log("error in api call");
+        }
+        console.log("🚀 ~ responseUser", responseUser);
+      } catch (e) {
+        console.log("Error in api", e);
+      }
+    };
+    getdata();
+  }, []);
+
   return (
-    <>SFCADFC</>
-    // <div className="main-add">
-    //   <div className="main-addww">
-    //     <h6>
-    //       <PersonAddAltIcon />
-    //       Edit Location Rack Details
-    //     </h6>
-    //   </div>
-    //   <form
-    //     onSubmit={(e) => {
-    //       e.preventDefault();
-    //       formik.handleSubmit();
-    //     }}
-    //   >
-    //     <div className="settingInput">
-    //       <h5>Location Rack Name</h5>
-    //       <input
-    //         className="settingField"
-    //         type="text"
-    //         name="locationRackName"
-    //         value={formik.values.locationRackName}
-    //         onChange={formik.handleChange}
-    //       />
-    //     </div>
-    //     {formik.touched.locationRackName && formik.errors.locationRackName ? (
-    //       <div className="errorMessage">{formik.errors.locationRackName}</div>
-    //     ) : null}
+    <div className="issue-containor">
+      <div>
+        <h4>Book Details</h4>
+      </div>
 
-    //     <div className="btn-Edit">
-    //       <button type="submit" className="btn-2">
-    //         Edit
-    //       </button>
-    //     </div>
-    //   </form>
-    // </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>Book ISBN Number</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p>{details.bookIsbnNumber}</p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>Book Title</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p></p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>Author</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p></p>
+        </div>
+      </div>
+      {/* /////////////////////// */}
+      <div className="details-headding">
+        <h4>User Details</h4>
+      </div>
+
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>User Unique ID</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p>{details.uniqueID}</p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>User Name</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p></p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>User Address </b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p></p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>User Contract No. </b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p></p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>User Email Address </b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p></p>
+        </div>
+      </div>
+      {/* ///////////////////////////// */}
+      <div className="details-headding">
+        <h4> Issue Book Details</h4>
+      </div>
+
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>Book Issue Date</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p>{details.issueDate}</p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>Book Return Date</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p>{details.returnDate} </p>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>Book Issue Status</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <button className="btn-Issue">Issue</button>
+        </div>
+      </div>
+      <div className="issue-details-containor">
+        <div className="book-name">
+          <h6>
+            <b>Total Fine</b>
+          </h6>
+        </div>
+        <div className="issue-number">
+          <p>Rs.0 </p>
+        </div>
+      </div>
+      <div className="btn-Edit">
+        <button type="submit" className="btn-2">
+          Book Return
+        </button>
+      </div>
+    </div>
   );
 };
 

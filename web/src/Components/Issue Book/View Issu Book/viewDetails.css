@@ -1,0 +1,16 @@
+.issue-details-containor {
+  display: flex;
+  border: 1px solid lightgray;
+}
+.book-name {
+  width: 40%;
+  padding: 5px;
+}
+.issue-number {
+  width: 60%;
+  padding: 5px;
+  border: 1px solid lightgray;
+}
+.details-headding {
+  margin-top: 20px;
+}

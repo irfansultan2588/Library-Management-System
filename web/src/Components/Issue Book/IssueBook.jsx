@@ -36,43 +36,35 @@ const IssueBook = () => {
     <div>
       <div className="categoryMain">
         <div className="profileDiv">
+          <div className="userHead">
+            <h2>Issue Book Management</h2>
+          </div>
+          <div className="setting-haed">
+            <h5>
+              <a href="#"> Dashboard</a> <span>/ Issue Book Management</span>
+            </h5>
+          </div>
           {!details && (
             <>
-              <div className="userHead">
-                <h2>Issue Book Management</h2>
-              </div>
-
-              <div className="setting-haed">
-                <h5>
-                  <a href="#"> Dashboard</a>{" "}
-                  <span>/ Issue Book Management</span>
-                </h5>
-              </div>
-              {!page && (
-                <>
-                  <div className="from-man">
-                    <div className="main-category">
-                      <div className="edit-setting-hadding">
-                        <h5>
-                          {" "}
-                          <CalendarViewMonthIcon />
-                          Issue Book Management
-                        </h5>
-                      </div>
-                      <div className="btn-con">
-                        <button
-                          className="btn-add"
-                          onClick={() => setPage(true)}
-                        >
-                          Add
-                        </button>
-                      </div>
-                    </div>
+              <div className="from-man">
+                <div className="main-category">
+                  <div className="edit-setting-hadding">
+                    <h5>
+                      {" "}
+                      <CalendarViewMonthIcon />
+                      Issue Book Management
+                    </h5>
                   </div>
-                </>
-              )}
+                  <div className="btn-con">
+                    <button className="btn-add" onClick={() => setPage(true)}>
+                      Add
+                    </button>
+                  </div>
+                </div>
+              </div>
             </>
           )}
+
           {page ? (
             <CreateBookIssue />
           ) : details ? (

@@ -118,6 +118,22 @@ const issueBookSchema = new mongoose.Schema({
 });
 const issueBookModel = mongoose.model("issuebook", issueBookSchema);
 
+////////////////issue details///////////////
+app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
+  console.log("🚀 ~ req", req.params);
+  try {
+    let data = await userModel.findOne({ _id: req.params.uniqueID }).exec();
+    let isbn = await bookModel
+      .findOne({ bookIsbnNumber: req.params.isbnNumber })
+      .exec();
+    res.send({
+      data: data,
+      isbn: isbn,
+    });
+  } catch (error) {
+    res.status(500).send({ message: "error getting data" });
+  }
+});
 ////////////Issue book post////////////////
 app.post("/issuebook", (req, res) => {
   let body = req.body;
@@ -149,6 +165,7 @@ app.get("/issuebook/:uid", async (req, res) => {
     res.status(500).send({ message: "error getting data" });
   }
 });
+
 ////////////book post////////////////
 app.post("/createbook", (req, res) => {
   let body = req.body;

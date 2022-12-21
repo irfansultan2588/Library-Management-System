@@ -3,11 +3,17 @@
   margin-top: 20px;
 }
 .rightside {
-  width: 100vw;
+  width: 100%;
+  height: 100%;
 }
 .sideber {
-  width: 28% !important;
-  max-height: 863.5px;
+  display: flex;
+  height: 115vh;
+  overflow: hidden;
+}
+.admin-main2 {
+  width: 100%;
+  height: 100%;
 }
 .bPQHAq {
   border: none !important;

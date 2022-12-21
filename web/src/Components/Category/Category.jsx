@@ -35,7 +35,7 @@ const Category = () => {
   const [details, setdetails] = useState(false);
 
   return (
-    <div>
+    <div className="mian-contaonor">
       {state?.user === null ? (
         <div> Loading... </div>
       ) : (

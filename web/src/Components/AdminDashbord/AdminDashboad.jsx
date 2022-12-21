@@ -119,7 +119,7 @@ const AdminDashboad = () => {
   };
   return (
     <div className="admin-main2">
-      <Box className="rightside" sx={{ flexGrow: 1 }}>
+      <Box className="rightside">
         <AppBar position="static">
           <Toolbar>
             <IconButton
@@ -184,14 +184,7 @@ const AdminDashboad = () => {
         </AppBar>
       </Box>
 
-      <div
-        className="sideber"
-        style={{
-          display: "flex",
-          height: "100vh",
-          overflow: "scroll initial",
-        }}
-      >
+      <div className="sideber">
         <CDBSidebar textColor="#fff" backgroundColor="#333">
           <CDBSidebarContent className="sidebar-content">
             <CDBSidebarMenu>
