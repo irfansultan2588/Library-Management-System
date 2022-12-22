@@ -120,7 +120,7 @@ const issueBookModel = mongoose.model("issuebook", issueBookSchema);
 
 ////////////////issue details///////////////
 app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
-  console.log("🚀 ~ req", req.params);
+  // console.log("🚀 ~ req", req.params);
   try {
     let data = await userModel.findOne({ _id: req.params.uniqueID }).exec();
     let isbn = await bookModel

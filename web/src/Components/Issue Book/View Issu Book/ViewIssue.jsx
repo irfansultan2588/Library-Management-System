@@ -2,16 +2,11 @@ import React from "react";
 import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../../Context";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { toast } from "react-toastify";
 import "./viewDetails.css";
 
 const ViewIssue = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
-  const [bookData, setbookData] = useState([]);
   const [profileData, setprofileData] = useState([]);
-  const [issuebookData, setissuebookData] = useState([]);
 
   useEffect(() => {
     const getdata = async () => {
@@ -27,7 +22,6 @@ const ViewIssue = ({ details }) => {
         } else {
           console.log("error in api call");
         }
-        console.log("🚀 ~ responseUser", responseUser);
       } catch (e) {
         console.log("Error in api", e);
       }
@@ -58,7 +52,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p></p>
+          {/* <p>{profileData.isbn.bookName}</p> */}
         </div>
       </div>
       <div className="issue-details-containor">
@@ -68,7 +62,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p></p>
+          {/* <p>{profileData.isbn.author.authorName}</p> */}
         </div>
       </div>
       {/* /////////////////////// */}
@@ -93,7 +87,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p></p>
+          {/* <p>{profileData.data.fullName}</p> */}
         </div>
       </div>
       <div className="issue-details-containor">
@@ -103,7 +97,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p></p>
+          {/* <p>{profileData.data.address}</p> */}
         </div>
       </div>
       <div className="issue-details-containor">
@@ -113,7 +107,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p></p>
+          {/* <p>{profileData.data.contactNo}</p> */}
         </div>
       </div>
       <div className="issue-details-containor">
@@ -123,7 +117,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p></p>
+          {/* <p>{profileData.data.email}</p> */}
         </div>
       </div>
       {/* ///////////////////////////// */}
@@ -175,6 +169,7 @@ const ViewIssue = ({ details }) => {
         <button type="submit" className="btn-2">
           Book Return
         </button>
+        ``
       </div>
     </div>
   );
