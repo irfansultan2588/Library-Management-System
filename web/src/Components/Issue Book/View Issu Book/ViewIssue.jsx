@@ -52,7 +52,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          {/* <p>{profileData.isbn.bookName}</p> */}
+          <p>{profileData.isbn.bookName}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -62,7 +62,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          {/* <p>{profileData.isbn.author.authorName}</p> */}
+          <p>{profileData.isbn.author.authorName}</p>
         </div>
       </div>
       {/* /////////////////////// */}
@@ -87,7 +87,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          {/* <p>{profileData.data.fullName}</p> */}
+          <p>{profileData.data.fullName}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -97,7 +97,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          {/* <p>{profileData.data.address}</p> */}
+          <p>{profileData.data.address}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -107,7 +107,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          {/* <p>{profileData.data.contactNo}</p> */}
+          <p>{profileData.data.contactNo}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -117,7 +117,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          {/* <p>{profileData.data.email}</p> */}
+          <p>{profileData.data.email}</p>
         </div>
       </div>
       {/* ///////////////////////////// */}
