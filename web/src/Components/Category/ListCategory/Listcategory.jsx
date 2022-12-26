@@ -12,7 +12,8 @@ const Listcategory = ({ setdetails }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [updatpage, setupdatpage] = useState(false);
   const [category, setcategory] = useState([]);
-  const [enable, Disable] = React.useState(true);
+  const [enable, setEnable] = React.useState(false);
+  let [toggleReload, setToggleReload] = useState(false);
 
   useEffect(() => {
     const getcategory = async () => {
@@ -34,6 +35,23 @@ const Listcategory = ({ setdetails }) => {
     };
     getcategory();
   }, []);
+
+  const Handlerstatus = async (val) => {
+    try {
+      const update = await axios.put(`${state.baseUrl}/status/${val._id}`, {
+        status: !val?.status,
+      });
+      alert("Status Updated Successful");
+      if (update.status === 200) {
+        setEnable(update?.data);
+        setToggleReload(!toggleReload);
+      } else {
+        console.log("error in api call");
+      }
+    } catch (e) {
+      console.log("🚀 ~ e", e);
+    }
+  };
 
   return (
     <>
@@ -98,18 +116,14 @@ const Listcategory = ({ setdetails }) => {
             </div>
             <div className="list-name">
               <h6>
-                {/* <>
+                <>
                   {item.status ? (
                     <button className="btn-enable">Enable</button>
                   ) : (
                     <button className="btn-disable">Disable</button>
                   )}
-                </> */}
+                </>
               </h6>
-              <button className={`btn-enable ${enable ? "enable" : "Disable"}`}>
-                {" "}
-                {enable ? "enable" : "Disable"}{" "}
-              </button>
             </div>
             <div className="list-name">
               <h6>{item.createdOn}</h6>
@@ -121,7 +135,10 @@ const Listcategory = ({ setdetails }) => {
               <button className="btn-edit" onClick={() => setdetails(item)}>
                 Edit
               </button>
-              <button className="btn-delete" onClick={() => Disable(!enable)}>
+              <button
+                className="btn-delete"
+                onClick={() => Handlerstatus(item)}
+              >
                 Delete
               </button>
             </div>

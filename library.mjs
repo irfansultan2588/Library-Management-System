@@ -134,6 +134,32 @@ app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
     res.status(500).send({ message: "error getting data" });
   }
 });
+
+///////////categoryupdate//////////////
+app.put("/status/:id", async (req, res) => {
+  const update = {};
+
+  update.status = req.body.status;
+
+  try {
+    const updated = await categoryModel
+      .findOneAndUpdate({ _id: req.params.id }, update, {
+        new: true,
+        status: false,
+      })
+      .exec();
+    console.log("🚀 ~ updated==", updated);
+
+    res.send({
+      message: "status updated successfuly",
+      status: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate status",
+    });
+  }
+});
 ////////////Issue book post////////////////
 app.post("/issuebook", (req, res) => {
   let body = req.body;
@@ -165,7 +191,6 @@ app.get("/issuebook/:uid", async (req, res) => {
     res.status(500).send({ message: "error getting data" });
   }
 });
-
 ////////////book post////////////////
 app.post("/createbook", (req, res) => {
   let body = req.body;
