@@ -120,9 +120,9 @@ const issueBookModel = mongoose.model("issuebook", issueBookSchema);
 
 ////////////////issue details///////////////
 app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
-  // console.log("🚀 ~ req", req.params);
   try {
     let data = await userModel.findOne({ _id: req.params.uniqueID }).exec();
+    console.log("🚀 ~ data", data);
     let isbn = await bookModel
       .findOne({ bookIsbnNumber: req.params.isbnNumber })
       .exec();
@@ -135,8 +135,57 @@ app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
   }
 });
 
+///////////userstatusupdated//////////////
+app.put("/userstatus/:id", async (req, res) => {
+  const update = {};
+
+  update.status = req.body.status;
+
+  try {
+    const updated = await userModel
+      .findOneAndUpdate({ _id: req.params.id }, update, {
+        new: true,
+        status: false,
+      })
+      .exec();
+
+    res.send({
+      message: "status updated successfuly",
+      status: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate status",
+    });
+  }
+});
+///////////authorstatusupdate//////////////
+app.put("/authorstatus/:id", async (req, res) => {
+  const update = {};
+
+  update.status = req.body.status;
+
+  try {
+    const updated = await authorModel
+      .findOneAndUpdate({ _id: req.params.id }, update, {
+        new: true,
+        status: false,
+      })
+      .exec();
+
+    res.send({
+      message: "status updated successfuly",
+      status: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate status",
+    });
+  }
+});
+
 ///////////categoryupdate//////////////
-app.put("/status/:id", async (req, res) => {
+app.put("/catstatus/:id", async (req, res) => {
   const update = {};
 
   update.status = req.body.status;
@@ -148,7 +197,6 @@ app.put("/status/:id", async (req, res) => {
         status: false,
       })
       .exec();
-    console.log("🚀 ~ updated==", updated);
 
     res.send({
       message: "status updated successfuly",
@@ -158,6 +206,89 @@ app.put("/status/:id", async (req, res) => {
     res.status(500).send({
       message: "faild to upadate status",
     });
+  }
+});
+///////////Rackstatus//////////////
+app.put("/Rackstatus/:id", async (req, res) => {
+  const update = {};
+
+  update.status = req.body.status;
+
+  try {
+    const updated = await locationRackModel
+      .findOneAndUpdate({ _id: req.params.id }, update, {
+        new: true,
+        status: false,
+      })
+      .exec();
+
+    res.send({
+      message: "status updated successfuly",
+      status: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate status",
+    });
+  }
+});
+///////////bookstatus//////////////
+app.put("/bookstatus/:id", async (req, res) => {
+  const update = {};
+
+  update.status = req.body.status;
+
+  try {
+    const updated = await bookModel
+      .findOneAndUpdate({ _id: req.params.id }, update, {
+        new: true,
+        status: false,
+      })
+      .exec();
+
+    res.send({
+      message: "status updated successfuly",
+      status: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate status",
+    });
+  }
+});
+///////////bookstatus//////////////
+app.put("/issuestatus/:id", async (req, res) => {
+  const update = {};
+
+  update.status = req.body.status;
+  update.updatedAt = Date.now();
+
+  try {
+    const updated = await issueBookModel
+      .findOneAndUpdate({ _id: req.params.id }, update, {
+        new: true,
+        status: false,
+      })
+      .exec();
+    console.log("🚀 ~ updated", updated);
+
+    res.send({
+      message: "status updated successfuly",
+      status: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate status",
+    });
+  }
+});
+///////////user profile////////////////
+app.get("/profiles", async (req, res) => {
+  try {
+    let user = await userModel.find({ _id: req?.params?.id }).exec();
+    res.send(user);
+  } catch (error) {
+    res.status(500).send({ message: "error getting users" });
   }
 });
 ////////////Issue book post////////////////

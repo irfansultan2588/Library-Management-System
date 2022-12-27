@@ -7,6 +7,7 @@ import "./viewDetails.css";
 const ViewIssue = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [profileData, setprofileData] = useState([]);
+  console.log("🚀 ~ profileData", profileData);
 
   useEffect(() => {
     const getdata = async () => {
@@ -29,6 +30,30 @@ const ViewIssue = ({ details }) => {
     getdata();
   }, []);
 
+  const Handlerstatus = async (details) => {
+    try {
+      const update = await axios.put(
+        `${state.baseUrl}/issuestatus/${details._id}`,
+        {
+          status: !details?.status,
+        }
+      );
+
+      if (update.status === 200) {
+        const updated = profileData.map((cat) =>
+          cat?._id === details?._id
+            ? { ...details, status: !details?.status }
+            : details
+        );
+        setprofileData(updated);
+      } else {
+        console.log("error in api call");
+      }
+    } catch (e) {
+      console.log("🚀 ~ e", e);
+    }
+  };
+
   return (
     <div className="issue-containor">
       <div>
@@ -45,6 +70,7 @@ const ViewIssue = ({ details }) => {
           <p>{details.bookIsbnNumber}</p>
         </div>
       </div>
+
       <div className="issue-details-containor">
         <div className="book-name">
           <h6>
@@ -52,7 +78,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p>{profileData.isbn.bookName}</p>
+          <p>{profileData?.isbn?.bookName}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -62,9 +88,10 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p>{profileData.isbn.author.authorName}</p>
+          <p>{profileData?.isbn?.author?.authorName}</p>
         </div>
       </div>
+
       {/* /////////////////////// */}
       <div className="details-headding">
         <h4>User Details</h4>
@@ -87,7 +114,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p>{profileData.data.fullName}</p>
+          <p>{profileData?.data?.fullName}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -97,7 +124,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p>{profileData.data.address}</p>
+          <p>{profileData?.data?.address}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -107,7 +134,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p>{profileData.data.contactNo}</p>
+          <p>{profileData?.data?.contactNo}</p>
         </div>
       </div>
       <div className="issue-details-containor">
@@ -117,7 +144,7 @@ const ViewIssue = ({ details }) => {
           </h6>
         </div>
         <div className="issue-number">
-          <p>{profileData.data.email}</p>
+          <p>{profileData?.data?.email}</p>
         </div>
       </div>
       {/* ///////////////////////////// */}
@@ -166,7 +193,11 @@ const ViewIssue = ({ details }) => {
         </div>
       </div>
       <div className="btn-Edit">
-        <button type="submit" className="btn-2">
+        <button
+          type="submit"
+          className="btn-2"
+          onClick={() => Handlerstatus(details)}
+        >
           Book Return
         </button>
         ``

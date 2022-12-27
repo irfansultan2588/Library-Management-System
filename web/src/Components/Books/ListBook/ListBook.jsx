@@ -29,6 +29,26 @@ const ListBook = ({ setdetails }) => {
     };
     getBook();
   }, []);
+
+  const Handlerstatus = async (val) => {
+    try {
+      const update = await axios.put(`${state.baseUrl}/bookstatus/${val._id}`, {
+        status: !val?.status,
+      });
+
+      if (update.status === 200) {
+        const updated = book.map((cat) =>
+          cat?._id === val?._id ? { ...cat, status: !val?.status } : cat
+        );
+        setgetBook(updated);
+      } else {
+        console.log("error in api call");
+      }
+    } catch (e) {
+      console.log("🚀 ~ e", e);
+    }
+  };
+
   return (
     <>
       <div className="seletInput">
@@ -151,7 +171,12 @@ const ListBook = ({ setdetails }) => {
               <button className="btn-edit" onClick={() => setdetails(item)}>
                 Edit
               </button>
-              <button className="btn-delete">Delete</button>
+              <button
+                className="btn-delete"
+                onClick={() => Handlerstatus(item)}
+              >
+                Delete
+              </button>
             </div>
             {updatpage && <></>}
           </div>

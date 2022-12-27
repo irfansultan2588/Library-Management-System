@@ -4,16 +4,11 @@ import { GlobalContext } from "../../../Context";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./listcategory.css";
-import Createcategory from "../createCategory/Createcategory";
-import Updatepage from "../updatepage/Updatepage";
-import Category from "../Category";
 
 const Listcategory = ({ setdetails }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [updatpage, setupdatpage] = useState(false);
   const [category, setcategory] = useState([]);
-  const [enable, setEnable] = React.useState(false);
-  let [toggleReload, setToggleReload] = useState(false);
 
   useEffect(() => {
     const getcategory = async () => {
@@ -38,13 +33,15 @@ const Listcategory = ({ setdetails }) => {
 
   const Handlerstatus = async (val) => {
     try {
-      const update = await axios.put(`${state.baseUrl}/status/${val._id}`, {
+      const update = await axios.put(`${state.baseUrl}/catstatus/${val._id}`, {
         status: !val?.status,
       });
-      alert("Status Updated Successful");
+
       if (update.status === 200) {
-        setEnable(update?.data);
-        setToggleReload(!toggleReload);
+        const updated = category.map((cat) =>
+          cat?._id === val?._id ? { ...cat, status: !val?.status } : cat
+        );
+        setcategory(updated);
       } else {
         console.log("error in api call");
       }
