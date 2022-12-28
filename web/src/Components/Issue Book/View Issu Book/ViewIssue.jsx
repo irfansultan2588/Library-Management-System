@@ -7,7 +7,6 @@ import "./viewDetails.css";
 const ViewIssue = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [profileData, setprofileData] = useState([]);
-  console.log("🚀 ~ profileData", profileData);
 
   useEffect(() => {
     const getdata = async () => {

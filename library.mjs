@@ -122,7 +122,6 @@ const issueBookModel = mongoose.model("issuebook", issueBookSchema);
 app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
   try {
     let data = await userModel.findOne({ _id: req.params.uniqueID }).exec();
-    console.log("🚀 ~ data", data);
     let isbn = await bookModel
       .findOne({ bookIsbnNumber: req.params.isbnNumber })
       .exec();
@@ -261,7 +260,7 @@ app.put("/issuestatus/:id", async (req, res) => {
   const update = {};
 
   update.status = req.body.status;
-  update.updatedAt = Date.now();
+  update.returnDate = Date.now();
 
   try {
     const updated = await issueBookModel
@@ -282,15 +281,7 @@ app.put("/issuestatus/:id", async (req, res) => {
     });
   }
 });
-///////////user profile////////////////
-app.get("/profiles", async (req, res) => {
-  try {
-    let user = await userModel.find({ _id: req?.params?.id }).exec();
-    res.send(user);
-  } catch (error) {
-    res.status(500).send({ message: "error getting users" });
-  }
-});
+
 ////////////Issue book post////////////////
 app.post("/issuebook", (req, res) => {
   let body = req.body;
@@ -856,6 +847,18 @@ app.get("/profile", async (req, res) => {
     res.status(500).send({ message: "error getting users" });
   }
 });
+
+///////////user profile////////////////
+app.get("/userdata:uid", async (req, res) => {
+  try {
+    let user = await userModel.find({ uid: req?.params?.uid }).exec();
+    res.send(user);
+    console.log("🚀 ~ user", user);
+  } catch (error) {
+    res.status(500).send({ message: "error getting users" });
+  }
+});
+
 ///////////user logout////////////////
 app.post("/logout", (req, res) => {
   res.cookie("Token", "", {

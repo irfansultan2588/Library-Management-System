@@ -6,15 +6,13 @@ import { useState } from "react";
 
 const Listuser = () => {
   let { state, dispatch } = useContext(GlobalContext);
-  console.log("🚀 ~ state", state);
   const [user, setuser] = useState([]);
-  console.log("🚀 ~ user", user);
 
   useEffect(() => {
-    const getProfile = async () => {
+    const getusers = async () => {
       try {
         let values = await axios({
-          url: `${state.baseUrl}/profiles/${state?.user?._id}`,
+          url: `${state.baseUrl}/userdata${state?.user?.data?._id}`,
           method: "get",
           withCredentials: true,
         });
@@ -23,12 +21,12 @@ const Listuser = () => {
         } else {
           console.log("Error in api");
         }
-        console.log("🚀 ~ values?.data", values?.data);
+        console.log("🚀 ~ values?.data===", values?.data);
       } catch (e) {
         console.log("Error in api", e);
       }
     };
-    getProfile();
+    getusers();
   }, []);
 
   // const Handlerstatus = async (state) => {
@@ -58,51 +56,62 @@ const Listuser = () => {
   // };
 
   return (
-    <div className="maincategory">
-      <div className="list-name">
-        <p>{state.user.data.fullName}</p>
-      </div>
-      <div className="list-name">
-        <p>{state.user.data.email}</p>
-      </div>
-      <div className="list-name">
-        <p>Password</p>
-      </div>
-      <div className="list-name">
-        <p>{state.user.data.address}</p>
-      </div>
-      <div className="list-name">
-        <p>{state.user.data.contactNo}</p>
-      </div>
-      <div className="list-name">
-        <p>Yes</p>
-      </div>
-      <div className="list-name">
-        <p>
-          <>
-            {state.user.data.status ? (
-              <button className="btn-enable">Enable</button>
-            ) : (
-              <button className="btn-disable">Disable</button>
-            )}
-          </>
-        </p>
-      </div>
-      <div className="list-name">
-        <p>{state.user.data.createdOn}</p>
-      </div>
-      <div className="list-name">
-        <p>{state.user.data.updatedAt}</p>
-      </div>
-      <div className="list-name">
-        <button
-          className="btn-delete"
-          //  onClick={() => Handlerstatus(state)}
-        >
-          Delete
-        </button>
-      </div>
-    </div>
+    <></>
+    // <div className="maincategory">
+    //   {user?.map((item) => {
+    //     console.log("🚀 ~ item", item);
+    //     return (
+    //       <>
+    //         <div className="list-name">
+    //           <p>{state.user.data._id}</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>{item?.fullName}</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>{item?.email}</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>Password</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>{state.user.data.address}</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>{state.user.data.contactNo}</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>Yes</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>
+    //             <>
+    //               {state.user.data.status ? (
+    //                 <button className="btn-enable">Enable</button>
+    //               ) : (
+    //                 <button className="btn-disable">Disable</button>
+    //               )}
+    //             </>
+    //           </p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>{state.user.data.createdOn}</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <p>{state.user.data.updatedAt}</p>
+    //         </div>
+    //         <div className="list-name">
+    //           <button
+    //             className="btn-delete"
+    //             //  onClick={() => Handlerstatus(state)}
+    //           >
+    //             Delete
+    //           </button>
+    //         </div>
+    //       </>
+    //     );
+    //   })}
+    // </div>
   );
 };
 
