@@ -8,26 +8,26 @@ const Listuser = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [user, setuser] = useState([]);
 
-  useEffect(() => {
-    const getusers = async () => {
-      try {
-        let values = await axios({
-          url: `${state.baseUrl}/userdata${state?.user?.data?._id}`,
-          method: "get",
-          withCredentials: true,
-        });
-        if (values.status === 200) {
-          setuser(values?.data);
-        } else {
-          console.log("Error in api");
-        }
-        console.log("🚀 ~ values?.data===", values?.data);
-      } catch (e) {
-        console.log("Error in api", e);
-      }
-    };
-    getusers();
-  }, []);
+  // useEffect(() => {
+  //   const getusers = async () => {
+  //     try {
+  //       let values = await axios({
+  //         url: `${state.baseUrl}/userdata${state?.user?.data?._id}`,
+  //         method: "get",
+  //         withCredentials: true,
+  //       });
+  //       if (values.status === 200) {
+  //         setuser(values?.data);
+  //       } else {
+  //         console.log("Error in api");
+  //       }
+  //       console.log("🚀 ~ values?.data===", values?.data);
+  //     } catch (e) {
+  //       console.log("Error in api", e);
+  //     }
+  //   };
+  //   getusers();
+  // }, []);
 
   // const Handlerstatus = async (state) => {
   //   console.log("🚀 ~ state", state);
