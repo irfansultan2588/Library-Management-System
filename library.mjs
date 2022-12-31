@@ -139,6 +139,7 @@ app.put("/userstatus/:id", async (req, res) => {
   const update = {};
 
   update.status = req.body.status;
+  update.updatedAt = Date.now();
 
   try {
     const updated = await userModel
@@ -853,7 +854,6 @@ app.get("/userdata:uid", async (req, res) => {
   try {
     let user = await userModel.find({ uid: req?.params?.uid }).exec();
     res.send(user);
-    console.log("🚀 ~ user", user);
   } catch (error) {
     res.status(500).send({ message: "error getting users" });
   }

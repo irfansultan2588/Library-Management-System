@@ -17,7 +17,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { TabScrollButton } from "@mui/material";
 
 const columns = [
   { id: "_id", label: "User Unique ID", minWidth: 100 },
@@ -111,6 +110,32 @@ const RegisterUser = () => {
     getusers();
   }, []);
 
+  const Handlerstatus = async (row) => {
+    try {
+      const update = await axios.put(
+        `${state.baseUrl}/userstatus/${state?.user?.data?._id}`,
+        {
+          status: !row?.status,
+        }
+      );
+      console.log("🚀 ~ row", row);
+
+      if (update.status === 200) {
+        const updated = row.map((cat) =>
+          cat?._id === row?.user?.data?._id
+            ? { ...cat, status: !row?.status }
+            : cat
+        );
+        setuser(updated);
+        console.log("🚀 ~ updated", updated);
+      } else {
+        console.log("error in api call");
+      }
+    } catch (e) {
+      console.log("🚀 ~ e", e);
+    }
+  };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -154,7 +179,6 @@ const RegisterUser = () => {
                 </div>
               </div>
             )}
-            {/* /////////////////// */}
             <Paper sx={{ width: "100%", overflow: "hidden" }} id="footer223">
               <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
@@ -172,103 +196,33 @@ const RegisterUser = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {/* ////////////////////// */}
-
-                    {/* <div className="maincategory">
-                      {user?.map((item) => {
-                        console.log("🚀 ~ item", item);
-                        return (
-                          <>
-                            <div className="list-name">
-                              <p>{state.user.data._id}</p>
-                            </div>
-                            <div className="list-name">
-                              <p>{item?.fullName}</p>
-                            </div>
-                            <div className="list-name">
-                              <p>{item?.email}</p>
-                            </div>
-                            <div className="list-name">
-                              <p>Password</p>
-                            </div>
-                            <div className="list-name">
-                              <p>{state.user.data.address}</p>
-                            </div>
-                            <div className="list-name">
-                              <p>{state.user.data.contactNo}</p>
-                            </div>
-                            <div className="list-name">
-                              <p>Yes</p>
-                            </div>
-                            <div className="list-name">
-                              <p>
-                                <>
-                                  {state.user.data.status ? (
-                                    <button className="btn-enable">
-                                      Enable
-                                    </button>
-                                  ) : (
-                                    <button className="btn-disable">
-                                      Disable
-                                    </button>
-                                  )}
-                                </>
-                              </p>
-                            </div>
-                            <div className="list-name">
-                              <p>{state.user.data.createdOn}</p>
-                            </div>
-                            <div className="list-name">
-                              <p>{state.user.data.updatedAt}</p>
-                            </div>
-                            <div className="list-name">
-                              <button
-                                className="btn-delete"
-                                //  onClick={() => Handlerstatus(state)}
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          </>
-                        );
-                      })}
-                    </div> */}
-
-                    {/* /////////////////////////////// */}
-                    {user
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((row) => {
-                        return (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            tabIndex={-1}
-                            key={row.code}
+                    {user.map((row) => (
+                      <TableRow key={row.number}>
+                        <TableCell>{row._id}</TableCell>
+                        <TableCell>{row.fullName}</TableCell>
+                        <TableCell>{row.email}</TableCell>
+                        <TableCell>{row.contactNo}</TableCell>
+                        <TableCell>{row.address}</TableCell>
+                        <TableCell>{row.verify ? "Yes" : "No"}</TableCell>
+                        <TableCell>
+                          {state.user.data.status ? (
+                            <button className="btn-enable">Enable</button>
+                          ) : (
+                            <button className="btn-disable">Disable</button>
+                          )}
+                        </TableCell>
+                        <TableCell>{row.createdOn}</TableCell>
+                        <TableCell>{row.updatedAt}</TableCell>
+                        <TableCell>
+                          <button
+                            className="btn-delete"
+                            onClick={() => Handlerstatus(row)}
                           >
-                            {columns.map((column) => {
-                              const value = row[column.id];
-                              return (
-                                <TableCell
-                                  key={column.id}
-                                  align={column.align}
-                                  sx={Boolean}
-                                >
-                                  {typeof value === "boolean"
-                                    ? value
-                                      ? "Yes"
-                                      : "No"
-                                    : column.format && typeof value === "number"
-                                    ? column.format(value)
-                                    : value}
-                                </TableCell>
-                              );
-                            })}
-                          </TableRow>
-                        );
-                      })}
+                            Delete
+                          </button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </TableContainer>
