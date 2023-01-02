@@ -139,6 +139,7 @@ app.put("/userstatus/:id", async (req, res) => {
   const update = {};
 
   update.status = req.body.status;
+
   update.updatedAt = Date.now();
 
   try {

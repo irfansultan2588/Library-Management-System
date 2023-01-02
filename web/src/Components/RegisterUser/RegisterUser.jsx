@@ -85,10 +85,11 @@ function Copyright(props) {
 const RegisterUser = () => {
   let { state, dispatch } = useContext(GlobalContext);
   // const [page, setPage] = useState(false);
-  const [details, setdetails] = useState(false);
+  const [details, setdetails] = useState(true);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [user, setuser] = useState([]);
+  console.log("🚀 ~ user", user);
 
   useEffect(() => {
     const getusers = async () => {
@@ -118,16 +119,12 @@ const RegisterUser = () => {
           status: !row?.status,
         }
       );
-      console.log("🚀 ~ row", row);
 
       if (update.status === 200) {
-        const updated = row.map((cat) =>
-          cat?._id === row?.user?.data?._id
-            ? { ...cat, status: !row?.status }
-            : cat
+        const updated = user.map((user) =>
+          user?._id === row?._id ? { ...user, status: !row?.status } : user
         );
         setuser(updated);
-        console.log("🚀 ~ updated", updated);
       } else {
         console.log("error in api call");
       }
@@ -196,23 +193,35 @@ const RegisterUser = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {user.map((row) => (
-                      <TableRow key={row.number}>
-                        <TableCell>{row._id}</TableCell>
-                        <TableCell>{row.fullName}</TableCell>
-                        <TableCell>{row.email}</TableCell>
-                        <TableCell>{row.contactNo}</TableCell>
-                        <TableCell>{row.address}</TableCell>
-                        <TableCell>{row.verify ? "Yes" : "No"}</TableCell>
+                    {user?.map((row) => (
+                      <TableRow key={row?.number}>
+                        <TableCell key={row?._id}>{row?._id}</TableCell>
+                        <TableCell key={row?.fullName}>
+                          {row?.fullName}
+                        </TableCell>
+                        <TableCell key={row?.email}>{row?.email}</TableCell>
+                        <TableCell key={row?.contactNo}>
+                          {row?.contactNo}
+                        </TableCell>
+                        <TableCell key={row?.address}>{row?.address}</TableCell>
+                        <TableCell>{row?.verify ? "Yes" : "No"}</TableCell>
                         <TableCell>
-                          {state.user.data.status ? (
+                          {row.status ? (
                             <button className="btn-enable">Enable</button>
                           ) : (
                             <button className="btn-disable">Disable</button>
                           )}
+                          {/* {state?.user?.data?.status ? (
+                          ) : (
+                            <button className="btn-disable">Disable</button>
+                          )} */}
                         </TableCell>
-                        <TableCell>{row.createdOn}</TableCell>
-                        <TableCell>{row.updatedAt}</TableCell>
+                        <TableCell key={row?.createdOn}>
+                          {row?.createdOn}
+                        </TableCell>
+                        <TableCell key={row?.updatedAt}>
+                          {row?.updatedAt}
+                        </TableCell>
                         <TableCell>
                           <button
                             className="btn-delete"
