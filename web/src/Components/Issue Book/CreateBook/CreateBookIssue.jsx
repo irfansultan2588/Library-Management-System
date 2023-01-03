@@ -8,11 +8,13 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./Createissuebook.css";
+import { useNavigate } from "react-router-dom";
 
 const CreateBookIssue = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [uid, setuid] = useState(state.user.data._id);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -45,7 +47,7 @@ const CreateBookIssue = () => {
             position: toast.POSITION.TOP_CENTER,
           });
           resetForm();
-          //   navigate("/dashboard/Author");
+          navigate(-0);
           setToggleRefresh(!toggleRefresh);
         })
         .catch((err) => {

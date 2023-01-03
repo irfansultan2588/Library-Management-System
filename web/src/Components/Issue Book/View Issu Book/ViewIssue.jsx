@@ -3,10 +3,12 @@ import axios from "axios";
 import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../../../Context";
 import "./viewDetails.css";
+import { useNavigate } from "react-router-dom";
 
 const ViewIssue = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [profileData, setprofileData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getdata = async () => {
@@ -44,6 +46,7 @@ const ViewIssue = ({ details }) => {
             ? { ...details, status: !details?.status }
             : details
         );
+        navigate(-0);
         setprofileData(updated);
       } else {
         console.log("error in api call");

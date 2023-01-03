@@ -6,12 +6,14 @@ import { GlobalContext } from "../../../Context";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const UpdateBook = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
   const [categoryData, setcategoryData] = useState([]);
   const [authorData, setauthorData] = useState([]);
   const [rackData, setrackData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getdata = async () => {
@@ -98,6 +100,7 @@ const UpdateBook = ({ details }) => {
         toast.success("Updated Book", {
           position: toast.POSITION.TOP_CENTER,
         });
+        navigate(-0);
       } catch (e) {
         toast.error("Updated Error", {
           position: toast.POSITION.TOP_CENTER,

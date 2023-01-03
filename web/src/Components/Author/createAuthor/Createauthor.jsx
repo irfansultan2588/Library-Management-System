@@ -41,7 +41,7 @@ const Createauthor = () => {
             position: toast.POSITION.TOP_CENTER,
           });
           resetForm();
-          //   navigate("/dashboard/Author");
+          navigate(-0);
           setToggleRefresh(!toggleRefresh);
         })
         .catch((err) => {

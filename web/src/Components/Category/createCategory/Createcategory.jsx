@@ -14,8 +14,9 @@ const Createcategory = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [uid, setuid] = useState(state.user.data._id);
+  const [category, setcategory] = useState([]);
+  const [page, setPage] = useState(true);
   const navigate = useNavigate();
-  const [category, setcategory] = useState({});
 
   const formik = useFormik({
     initialValues: {
@@ -42,8 +43,8 @@ const Createcategory = () => {
           toast.success("Create Category", {
             position: toast.POSITION.TOP_CENTER,
           });
+          navigate(-0);
           resetForm();
-          navigate("/dashboard/category");
           setToggleRefresh(!toggleRefresh);
         })
         .catch((err) => {

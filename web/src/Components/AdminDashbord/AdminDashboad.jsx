@@ -73,8 +73,8 @@ const AdminDashboad = () => {
         }
       );
       console.log("response", response.data);
-
       dispatch({ type: "USER_LOGOUT" });
+      navigate("/");
     } catch (e) {
       console.log("Error in api", e);
     }
@@ -263,7 +263,7 @@ const AdminDashboad = () => {
                   Issue Book
                 </CDBSidebarMenuItem>
               </NavLink>
-              <NavLink exact to="/" activeClassName="activeClicked">
+              <NavLink exact to="/home" activeClassName="activeClicked">
                 <CDBSidebarMenuItem>
                   <LogoutIcon className="icons" />
                   Logout

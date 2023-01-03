@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 const Updatepage = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -34,6 +35,7 @@ const Updatepage = ({ details }) => {
         toast.success("Updated category", {
           position: toast.POSITION.TOP_CENTER,
         });
+        navigate(-0);
       } catch (e) {
         toast.error("Updated Error", {
           position: toast.POSITION.TOP_CENTER,

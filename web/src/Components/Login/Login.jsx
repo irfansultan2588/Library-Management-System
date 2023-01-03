@@ -16,6 +16,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import "./login.css";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -39,6 +40,7 @@ const theme = createTheme();
 
 function Login() {
   let { state, dispatch } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -73,6 +75,7 @@ function Login() {
         toast.success("Login Success", {
           position: toast.POSITION.TOP_CENTER,
         });
+        navigate("/dashboard/home");
         dispatch({ type: "USER_LOGIN", payload: values });
       } catch (e) {
         toast.error("Login Faild", {

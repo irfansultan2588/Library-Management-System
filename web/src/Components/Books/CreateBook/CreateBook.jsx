@@ -17,7 +17,7 @@ const CreateBook = () => {
   const [categoryData, setcategoryData] = useState([]);
   const [authorData, setauthorData] = useState([]);
   const [rackData, setrackData] = useState([]);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getdata = async () => {
@@ -113,7 +113,7 @@ const CreateBook = () => {
             position: toast.POSITION.TOP_CENTER,
           });
           resetForm();
-          //   navigate("/dashboard/Author");
+          navigate(-0);
           setToggleRefresh(!toggleRefresh);
         })
         .catch((err) => {

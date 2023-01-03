@@ -89,7 +89,6 @@ const RegisterUser = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [user, setuser] = useState([]);
-  console.log("🚀 ~ user", user);
 
   useEffect(() => {
     const getusers = async () => {

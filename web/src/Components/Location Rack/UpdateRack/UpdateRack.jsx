@@ -6,9 +6,11 @@ import { GlobalContext } from "../../../Context";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const UpdateRack = ({ details }) => {
   let { state, dispatch } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -32,6 +34,7 @@ const UpdateRack = ({ details }) => {
         toast.success("Updated Author", {
           position: toast.POSITION.TOP_CENTER,
         });
+        navigate(-0);
       } catch (e) {
         toast.error("Updated Error", {
           position: toast.POSITION.TOP_CENTER,
