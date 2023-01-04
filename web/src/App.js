@@ -45,14 +45,16 @@ function App() {
     getProfile();
   }, []);
 
+  console.log(state?.user?.data);
+
   return (
     <>
       <Router>
         <Routes>
           {state?.isLogin === true ? (
             <>
-              <Route path="/logout" element={<Home />} />
-              <Route path="/login" element={<AdminDashboad />} />
+              {/* <Route path="/logout" element={<Home />} /> */}
+
               <Route path="/dashboard/:type" element={<AdminDashboad />} />
               <Route path="/" element={<AdminDashboad />} />
             </>

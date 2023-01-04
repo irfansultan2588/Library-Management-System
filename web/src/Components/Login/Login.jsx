@@ -76,11 +76,11 @@ function Login() {
           position: toast.POSITION.TOP_CENTER,
         });
         dispatch({ type: "USER_LOGIN", payload: values });
-        if (values.data.roll === "admin") {
-          navigate("/dashboard/home");
-        } else {
-          navigate("/dashboard/category");
-        }
+        // if (values.data.roll === "admin") {
+        //   navigate("/dashboard/home");
+        // } else {
+        //   navigate("/dashboard/category");
+        // }
       } catch (e) {
         toast.error("Login Faild", {
           position: toast.POSITION.TOP_CENTER,
