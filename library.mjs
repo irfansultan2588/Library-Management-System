@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   address: { type: String, required: true },
   contactNo: { type: Number, required: true },
+  roll: { type: String },
   verify: { type: Boolean, default: false },
   status: { type: Boolean, default: true },
   otp: { type: String },

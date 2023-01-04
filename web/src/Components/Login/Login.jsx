@@ -75,8 +75,12 @@ function Login() {
         toast.success("Login Success", {
           position: toast.POSITION.TOP_CENTER,
         });
-        navigate("/dashboard/home");
         dispatch({ type: "USER_LOGIN", payload: values });
+        if (values.data.roll === "admin") {
+          navigate("/dashboard/home");
+        } else {
+          navigate("/dashboard/category");
+        }
       } catch (e) {
         toast.error("Login Faild", {
           position: toast.POSITION.TOP_CENTER,
