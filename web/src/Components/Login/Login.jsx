@@ -61,6 +61,7 @@ function Login() {
           {
             email: values.email,
             password: values.password,
+            role: values.role,
           },
 
           {
@@ -76,11 +77,12 @@ function Login() {
           position: toast.POSITION.TOP_CENTER,
         });
         dispatch({ type: "USER_LOGIN", payload: values });
-        // if (values.data.roll === "admin") {
-        //   navigate("/dashboard/home");
-        // } else {
-        //   navigate("/dashboard/category");
-        // }
+        console.log("🚀 ~ values", values);
+        if (values?.role === "admin") {
+          navigate("/dashboard/home");
+        } else {
+          navigate("/");
+        }
       } catch (e) {
         toast.error("Login Faild", {
           position: toast.POSITION.TOP_CENTER,

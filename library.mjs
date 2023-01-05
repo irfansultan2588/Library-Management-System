@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   address: { type: String, required: true },
   contactNo: { type: Number, required: true },
-  roll: { type: String },
+  role: { type: String },
   verify: { type: Boolean, default: false },
   status: { type: Boolean, default: true },
   otp: { type: String },
@@ -708,7 +708,7 @@ app.post("/login", (req, res) => {
 
   userModel.findOne(
     { email: body.email },
-    "fullName email password address contactNo verify",
+    "fullName email password address contactNo verify role",
     (err, user) => {
       if (!err) {
         if (user) {
@@ -738,6 +738,7 @@ app.post("/login", (req, res) => {
                   fullName: user.fullName,
                   email: user.email,
                   password: user.password,
+                  role: user.role,
                 },
               });
 

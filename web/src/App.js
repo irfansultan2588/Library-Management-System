@@ -1,6 +1,7 @@
 import "./App.css";
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "./Context";
+import Userpage from "./Components/userpage/Userpage";
 import {
   BrowserRouter as Router,
   Routes,
@@ -45,7 +46,7 @@ function App() {
     getProfile();
   }, []);
 
-  console.log(state?.user?.data);
+  // console.log(state?.user?.data?.role);
 
   return (
     <>
@@ -53,10 +54,20 @@ function App() {
         <Routes>
           {state?.isLogin === true ? (
             <>
-              {/* <Route path="/logout" element={<Home />} /> */}
-
-              <Route path="/dashboard/:type" element={<AdminDashboad />} />
-              <Route path="/" element={<AdminDashboad />} />
+              <Route path="/logout" element={<Home />} />
+              {state?.user?.data?.role === "admin" ? (
+                <>
+                  {/* <Route path="/login" element={<AdminDashboad />} /> */}
+                  <Route path="/dashboard/:type" element={<AdminDashboad />} />
+                  <Route path="/" element={<AdminDashboad />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/" element={<Userpage />} />
+                  {/* <Route path="/login" element={<Userpage />} /> */}
+                  {/* <Route path="/logout" element={<Login />} /> */}
+                </>
+              )}
             </>
           ) : null}
 
