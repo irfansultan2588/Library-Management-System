@@ -1,0 +1,14 @@
+.main-col {
+  margin-top: 2rem;
+  font-weight: 400;
+}
+.main-col {
+  float: right;
+}
+.main-col > a {
+  margin-right: 10px;
+  border-bottom: 1px solid blue;
+}
+#footer3 {
+  margin-top: 2rem !important;
+}

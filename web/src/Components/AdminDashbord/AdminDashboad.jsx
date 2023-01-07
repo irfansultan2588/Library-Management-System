@@ -72,7 +72,6 @@ const AdminDashboad = () => {
           withCredentials: true,
         }
       );
-      console.log("response", response.data);
       dispatch({ type: "USER_LOGOUT" });
       navigate("/");
     } catch (e) {

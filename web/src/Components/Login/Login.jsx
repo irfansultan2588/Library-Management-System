@@ -55,7 +55,7 @@ function Login() {
     }),
     onSubmit: async (values) => {
       try {
-        await axios.post(
+        const resp = await axios.post(
           `${state.baseUrl}/login`,
 
           {
@@ -77,8 +77,8 @@ function Login() {
           position: toast.POSITION.TOP_CENTER,
         });
         dispatch({ type: "USER_LOGIN", payload: values });
-        console.log("🚀 ~ values", values);
-        if (values?.role === "admin") {
+
+        if (resp?.data?.profile?.role === "admin") {
           navigate("/dashboard/home");
         } else {
           navigate("/");
