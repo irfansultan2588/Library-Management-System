@@ -111,6 +111,7 @@ const bookModel = mongoose.model("book", bookSchema);
 ///////////////issue book schema//////////
 const issueBookSchema = new mongoose.Schema({
   bookIsbnNumber: { type: Number, required: true },
+  bookName: { type: String },
   uniqueID: { type: String, required: true },
   status: { type: Boolean, default: true },
   uid: { type: String },
@@ -118,6 +119,16 @@ const issueBookSchema = new mongoose.Schema({
   returnDate: { type: Date },
 });
 const issueBookModel = mongoose.model("issuebook", issueBookSchema);
+
+// //////////// user page Issue book get data////////////////
+app.get("/issuebook/:id", async (req, res) => {
+  try {
+    let data = await issueBookModel.find({ id: req.params.id }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting data" });
+  }
+});
 
 ////////////////issue details///////////////
 app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
@@ -288,22 +299,27 @@ app.put("/issuestatus/:id", async (req, res) => {
 ////////////Issue book post////////////////
 app.post("/issuebook", (req, res) => {
   let body = req.body;
-
   issueBookModel.findOne({ email: body.email }, (err, book) => {
     if (!err) {
-      issueBookModel
-        .create({
-          bookIsbnNumber: body.bookIsbnNumber,
-          uniqueID: body.uniqueID,
-          uid: body.uid,
-        })
-        .then((resss) => {
-          res.status(200).send({ message: "Issued Book" });
-        })
-        .catch((err) => {
-          console.log(err, "err");
-          res.status(500).send({ message: "internal server error" });
-        });
+      let data = bookModel.findOne(
+        { bookIsbnNumber: body.bookIsbnNumber },
+        (e, book) => {
+          issueBookModel
+            .create({
+              bookIsbnNumber: body.bookIsbnNumber,
+              uniqueID: body.uniqueID,
+              uid: body.uid,
+              bookName: book.bookName,
+            })
+            .then((resss) => {
+              res.status(200).send({ message: "Issued Book" });
+            })
+            .catch((err) => {
+              console.log(err, "err");
+              res.status(500).send({ message: "internal server error" });
+            });
+        }
+      );
     }
   });
 });

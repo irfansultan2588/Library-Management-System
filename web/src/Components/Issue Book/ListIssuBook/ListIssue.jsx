@@ -99,16 +99,16 @@ const ListIssue = ({ setdetails }) => {
         return (
           <div className="maincategory">
             <div className="list-name">
-              <h6>{item.bookIsbnNumber}</h6>
+              <h6>{item?.bookIsbnNumber}</h6>
             </div>
             <div className="list-name">
-              <h6>{item.uniqueID}</h6>
+              <h6>{item?.uniqueID}</h6>
             </div>
             <div className="list-name">
-              <h6>{item.issueDate}</h6>
+              <h6>{item?.issueDate}</h6>
             </div>
             <div className="list-name">
-              <h6>{item.returnDate}</h6>
+              <h6>{item?.returnDate}</h6>
             </div>
             <div className="list-name">
               <h6>Rs,0</h6>
@@ -117,7 +117,7 @@ const ListIssue = ({ setdetails }) => {
             <div className="list-name">
               <h6>
                 <>
-                  {item.status ? (
+                  {item?.status ? (
                     <button className="btn-Issue">Issue</button>
                   ) : (
                     <button className="btn-View">Return</button>

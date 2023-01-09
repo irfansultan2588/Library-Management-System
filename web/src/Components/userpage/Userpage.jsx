@@ -23,25 +23,25 @@ import axios from "axios";
 
 const columns = [
   { id: "bookisbn", label: "Book ISBN NO.", minWidth: 100 },
-  { id: "fullName", label: "Book Name", minWidth: 100 },
+  { id: "bookName", label: "Book Name", minWidth: 100 },
   {
-    id: "email",
+    id: "issueDate",
     label: "Issue Date",
     minWidth: 100,
   },
   {
-    id: "contactNo",
+    id: "returnDate",
     label: "Return Date",
     minWidth: 100,
   },
   {
-    id: "address",
+    id: "fines",
     label: "Fines",
     minWidth: 100,
   },
   {
     id: "Status",
-    label: "Email Verified",
+    label: "Status",
     minWidth: 100,
   },
 ];
@@ -75,7 +75,7 @@ const Userpage = () => {
     const getIssueBook = async () => {
       try {
         let response = await axios({
-          url: `${state.baseUrl}/issuebook/${state?.user?.data?._id}`,
+          url: `${state.baseUrl}/issuebook/${state?.user?._id}`,
           method: "get",
           withCredentials: true,
         });
@@ -182,42 +182,33 @@ const Userpage = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {user?.map((row) => (
+                    {issueBook?.map((row) => (
                       <TableRow key={row?.number}>
-                        <TableCell key={row?._id}>{row?._id}</TableCell>
-                        <TableCell key={row?.fullName}>
-                          {row?.fullName}
+                        <TableCell key={row?.book?.bookIsbnNumber}>
+                          {row?.bookIsbnNumber}
                         </TableCell>
-                        <TableCell key={row?.email}>{row?.email}</TableCell>
-                        <TableCell key={row?.contactNo}>
-                          {row?.contactNo}
+                        <TableCell key={row?.book?.bookName}>
+                          {row?.bookName}
                         </TableCell>
-                        <TableCell key={row?.address}>{row?.address}</TableCell>
-                        <TableCell>{row?.verify ? "Yes" : "No"}</TableCell>
+                        <TableCell key={row?.issueDate}>
+                          {row?.issueDate}
+                        </TableCell>
+                        <TableCell key={row?.returnDate}>
+                          {row?.returnDate}
+                        </TableCell>
+                        <TableCell>{row?.verify ? "Rs.0" : "Rs.0"}</TableCell>
                         <TableCell>
                           {row.status ? (
-                            <button className="btn-enable">Enable</button>
+                            <button className="btn-Issue">Issue</button>
                           ) : (
-                            <button className="btn-disable">Disable</button>
+                            <button className="btn-View">Return</button>
                           )}
-                          {/* {state?.user?.data?.status ? (
-                          ) : (
-                            <button className="btn-disable">Disable</button>
-                          )} */}
                         </TableCell>
                         <TableCell key={row?.createdOn}>
                           {row?.createdOn}
                         </TableCell>
                         <TableCell key={row?.updatedAt}>
                           {row?.updatedAt}
-                        </TableCell>
-                        <TableCell>
-                          <button
-                            className="btn-delete"
-                            onClick={() => Handlerstatus(row)}
-                          >
-                            Delete
-                          </button>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -228,7 +219,7 @@ const Userpage = () => {
                 id="footer"
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={user.length}
+                count={issueBook.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}

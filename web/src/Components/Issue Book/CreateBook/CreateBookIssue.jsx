@@ -14,7 +14,31 @@ const CreateBookIssue = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [toggleRefresh, setToggleRefresh] = useState(true);
   const [uid, setuid] = useState(state.user.data._id);
+  const [book, setgetBook] = useState([]);
+  // console.log("🚀 ~ book", book);
+
   const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const getBook = async () => {
+  //     try {
+  //       let response = await axios({
+  //         url: `${state.baseUrl}/books/${state?.user?.data?._id}`,
+  //         method: "get",
+  //         withCredentials: true,
+  //       });
+
+  //       if (response.status === 200) {
+  //         setgetBook(response?.data);
+  //       } else {
+  //         console.log("error in api call");
+  //       }
+  //     } catch (e) {
+  //       console.log("Error in api", e);
+  //     }
+  //   };
+  //   getBook();
+  // }, []);
 
   const formik = useFormik({
     initialValues: {
@@ -38,6 +62,7 @@ const CreateBookIssue = () => {
           bookIsbnNumber: values?.bookIsbnNumber,
           uniqueID: values?.uniqueID,
           uid,
+          // bookName,
         },
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
