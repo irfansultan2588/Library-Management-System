@@ -1,0 +1,14 @@
+.boder {
+  margin-top: 5rem;
+  padding: 20px;
+  border: 1px solid lightgray !important;
+}
+.hading-Profile {
+  width: 100%;
+  border: 1px solid lightgray;
+  padding: 10px;
+}
+.main2 {
+  /* width: 100vw; */
+  background-color: lightgray;
+}

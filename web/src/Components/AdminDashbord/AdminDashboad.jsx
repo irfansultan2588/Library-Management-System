@@ -33,7 +33,6 @@ import { NavLink } from "react-router-dom";
 import CommonCard from "../homecard/CommonCard";
 import Profile from "../profile/Profile";
 import Setting from "../Setting/Setting";
-import Logout from "../LogOut/Logout";
 import Category from "../Category/Category";
 import Author from "../Author/Author";
 import LocationRack from "../Location Rack/LocationRack";

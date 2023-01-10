@@ -1,7 +1,6 @@
 import "./App.css";
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "./Context";
-import Userpage from "./Components/userpage/Userpage";
 import {
   BrowserRouter as Router,
   Routes,
@@ -16,6 +15,9 @@ import Home from "./Components/Home/Home";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminDashboad from "./Components/AdminDashbord/AdminDashboad";
+import UserSearchbook from "./Components/SarchbookUser/UserSearchbook";
+import Userissue from "./Components/Issueuserpage/Userissue";
+import UserProfile from "./Components/UserProfile/UserProfile";
 
 function App() {
   let { state, dispatch } = useContext(GlobalContext);
@@ -57,14 +59,15 @@ function App() {
               <Route path="/logout" element={<Home />} />
               {state?.user?.data?.role === "admin" ? (
                 <>
-                  {/* <Route path="/login" element={<AdminDashboad />} /> */}
                   <Route path="/dashboard/:type" element={<AdminDashboad />} />
                   <Route path="/" element={<AdminDashboad />} />
                 </>
               ) : (
                 <>
-                  <Route path="/" element={<Userpage />} />
-                  {/* <Route path="/login" element={<Userpage />} /> */}
+                  <Route path="/" element={<Userissue />} />
+                  <Route path="/Userissue" element={<Userissue />} />
+                  <Route path="/UserSearchbook" element={<UserSearchbook />} />
+                  <Route path="/profile" element={<UserProfile />} />
                   {/* <Route path="/logout" element={<Login />} /> */}
                 </>
               )}

@@ -1,0 +1,10 @@
+.btn-Available {
+  border: none;
+  background-color: green;
+  color: #fff;
+}
+.btn-notAvailable {
+  border: none;
+  background-color: red;
+  color: #fff;
+}

@@ -130,6 +130,16 @@ app.get("/issuebook/:id", async (req, res) => {
   }
 });
 
+//////////// user page Books get data////////////////
+app.get("/books", async (req, res) => {
+  try {
+    let data = await bookModel.find({ id: req.params.id }).exec();
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ message: "error getting data" });
+  }
+});
+
 ////////////////issue details///////////////
 app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
   try {

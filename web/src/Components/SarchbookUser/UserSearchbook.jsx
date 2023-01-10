@@ -15,31 +15,7 @@ import Link from "@mui/material/Link";
 import Userpage from "../userpage/Userpage";
 import axios from "axios";
 import Container from "react-bootstrap/Container";
-
-const columns = [
-  { id: "bookisbn", label: "Book ISBN NO.", minWidth: 100 },
-  { id: "bookName", label: "Book Name", minWidth: 100 },
-  {
-    id: "issueDate",
-    label: "Issue Date",
-    minWidth: 100,
-  },
-  {
-    id: "returnDate",
-    label: "Return Date",
-    minWidth: 100,
-  },
-  {
-    id: "fines",
-    label: "Fines",
-    minWidth: 100,
-  },
-  {
-    id: "Status",
-    label: "Status",
-    minWidth: 100,
-  },
-];
+import "./searchbook.css";
 
 function Copyright(props) {
   return (
@@ -59,24 +35,62 @@ function Copyright(props) {
   );
 }
 
-const Userissue = () => {
+const columns = [
+  { id: "bookName", label: "Book Name", minWidth: 100 },
+  {
+    id: "bookIsbnNumber",
+    label: "ISBN No.",
+    minWidth: 100,
+  },
+  {
+    id: "category",
+    label: "Category",
+    minWidth: 100,
+  },
+  {
+    id: "author",
+    label: "Author",
+    minWidth: 100,
+  },
+  {
+    id: "locationRack",
+    label: "Location Rack",
+    minWidth: 100,
+  },
+  {
+    id: "bookCopy",
+    label: "No Of Available Copy",
+    minWidth: 100,
+  },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 100,
+  },
+  {
+    id: "createdOn",
+    label: "Added On",
+    minWidth: 100,
+  },
+];
+
+const UserSearchbook = () => {
   let { state, dispatch } = useContext(GlobalContext);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [issueBook, SetIssueBook] = useState([]);
-  const [pages, setPages] = useState(false);
+  const [Books, Setbooks] = useState([]);
 
   useEffect(() => {
-    const getIssueBook = async () => {
+    const getBooks = async () => {
       try {
         let response = await axios({
-          url: `${state.baseUrl}/issuebook/${state?.user?._id}`,
+          url: `${state.baseUrl}/books`,
           method: "get",
           withCredentials: true,
         });
 
         if (response.status === 200) {
-          SetIssueBook(response?.data);
+          Setbooks(response?.data);
         } else {
           console.log("error in api call");
         }
@@ -84,7 +98,7 @@ const Userissue = () => {
         console.log("Error in api", e);
       }
     };
-    getIssueBook();
+    getBooks();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -98,17 +112,16 @@ const Userissue = () => {
 
   return (
     <>
+      <Userpage />
       <Container>
-        <Userpage />
         <div className="categoryMain">
           <div className="profileDiv">
             <div className="userHead">
-              <h2>Issue Book Details</h2>
+              <h2>Search Book</h2>
             </div>
-
             <Paper sx={{ width: "100%", overflow: "hidden" }} id="footer3">
               <div className="setting-haed">
-                <h5>Author Managment</h5>
+                <h5>Book List</h5>
               </div>
               <TableContainer sx={{ maxHeight: 440 }}>
                 <Table stickyHeader aria-label="sticky table">
@@ -126,33 +139,37 @@ const Userissue = () => {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {issueBook?.map((row) => (
+                    {Books?.map((row) => (
                       <TableRow key={row?.number}>
+                        <TableCell key={row?.bookName}>
+                          {row?.bookName}
+                        </TableCell>
                         <TableCell key={row?.book?.bookIsbnNumber}>
                           {row?.bookIsbnNumber}
                         </TableCell>
-                        <TableCell key={row?.book?.bookName}>
-                          {row?.bookName}
+                        <TableCell key={row?.category}>
+                          {row?.category?.categoryName}
                         </TableCell>
-                        <TableCell key={row?.issueDate}>
-                          {row?.issueDate}
+                        <TableCell key={row?.author}>
+                          {row?.author?.authorName}
                         </TableCell>
-                        <TableCell key={row?.returnDate}>
-                          {row?.returnDate}
+                        <TableCell key={row?.locationRack}>
+                          {row?.locationRack?.locationRackName}
                         </TableCell>
-                        <TableCell>{row?.verify ? "Rs.0" : "Rs.0"}</TableCell>
+                        <TableCell key={row?.bookCopy}>
+                          {row?.bookCopy}
+                        </TableCell>
                         <TableCell>
                           {row.status ? (
-                            <button className="btn-Issue">Issue</button>
+                            <button className="btn-Available">Available</button>
                           ) : (
-                            <button className="btn-View">Return</button>
+                            <button className="btn-notAvailable">
+                              Not Available
+                            </button>
                           )}
                         </TableCell>
                         <TableCell key={row?.createdOn}>
                           {row?.createdOn}
-                        </TableCell>
-                        <TableCell key={row?.updatedAt}>
-                          {row?.updatedAt}
                         </TableCell>
                       </TableRow>
                     ))}
@@ -163,7 +180,7 @@ const Userissue = () => {
                 id="footer"
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={issueBook.length}
+                count={Books.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
@@ -179,4 +196,4 @@ const Userissue = () => {
   );
 };
 
-export default Userissue;
+export default UserSearchbook;
