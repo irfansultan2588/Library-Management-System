@@ -4,8 +4,33 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "./user.css";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useContext } from "react";
+import { GlobalContext } from "../../Context";
+import { useNavigate } from "react-router-dom";
 
 const Userpage = () => {
+  const { state, dispatch } = useContext(GlobalContext);
+
+  const navigate = useNavigate();
+
+  const logouthandler = async () => {
+    try {
+      let response = await axios.post(
+        `${state.baseUrl}/logout`,
+        {},
+
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch({ type: "USER_LOGOUT" });
+      navigate("/");
+    } catch (e) {
+      console.log("Error in api", e);
+    }
+  };
+
   return (
     <div>
       <Container>
@@ -30,7 +55,7 @@ const Userpage = () => {
               <NavLink exact to="/profile" activeClassName="activeClicked">
                 Profile
               </NavLink>
-              <NavLink exact to="logout" activeClassName="activeClicked">
+              <NavLink exact to="/logout" onClick={logouthandler}>
                 Logout
               </NavLink>
             </div>

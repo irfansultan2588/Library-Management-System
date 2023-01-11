@@ -57,6 +57,7 @@ function App() {
           {state?.isLogin === true ? (
             <>
               <Route path="/logout" element={<Home />} />
+              {/* <Route path="/login" element={<AdminDashboad />} /> */}
               {state?.user?.data?.role === "admin" ? (
                 <>
                   <Route path="/dashboard/:type" element={<AdminDashboad />} />
@@ -68,7 +69,7 @@ function App() {
                   <Route path="/Userissue" element={<Userissue />} />
                   <Route path="/UserSearchbook" element={<UserSearchbook />} />
                   <Route path="/profile" element={<UserProfile />} />
-                  {/* <Route path="/logout" element={<Login />} /> */}
+                  <Route path="/logout" element={<Home />} />
                 </>
               )}
             </>

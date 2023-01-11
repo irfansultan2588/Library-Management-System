@@ -140,6 +140,31 @@ app.get("/books", async (req, res) => {
   }
 });
 
+////////////Update profile/////////////
+app.put("/profile/:id", async (req, res) => {
+  const update = {};
+  if (req.body.email) update.email = req.body.email;
+  if (req.body.password) update.password = req.body.password;
+  if (req.body.fullName) update.fullName = req.body.fullName;
+  if (req.body.contactNo) update.contactNo = req.body.contactNo;
+  if (req.body.address) update.address = req.body.address;
+
+  try {
+    const updated = await userModel
+      .findOneAndUpdate({ _id: req.params.id }, update, { new: true })
+      .exec();
+
+    res.send({
+      message: "profile updated successfuly",
+      data: updated,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "faild to upadate profile",
+    });
+  }
+});
+
 ////////////////issue details///////////////
 app.get("/userdata/:uniqueID/:isbnNumber", async (req, res) => {
   try {

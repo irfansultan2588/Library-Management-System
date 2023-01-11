@@ -9,74 +9,81 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { GlobalContext } from "../../Context";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import "./userProfile.css";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import Userpage from "../userpage/Userpage";
+import { toast } from "react-toastify";
 
 const theme = createTheme();
 
 const UserProfile = () => {
   let { state, dispatch } = useContext(GlobalContext);
-  const [toggleRefresh, setToggleRefresh] = useState(true);
   const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
-      fullName: "",
-      email: "",
-      password: "",
-      address: "",
-      contactNo: "",
+      email: state?.user?.data?.email,
+      password: state?.user?.data?.password,
+      fullName: state?.user?.data?.fullName,
+      contactNo: state?.user?.data?.contactNo,
+      address: state?.user?.data?.address,
     },
+    enableReinitialize: true,
 
-    // validationSchema: yup.object({
-    //   fullName: yup
-    //     .string("Enter your fullName")
-    //     .required("fullName is required"),
-    //   email: yup
-    //     .string("Enter your email")
-    //     .email("Enter a valid email")
-    //     .required("Email is required"),
-    //   password: yup
-    //     .string("Enter your password")
-    //     .min(4, "Password should be of minimum 4 characters length")
-    //     .required("Password is required"),
-    //   address: yup
-    //     .string("Enter your address")
+    validationSchema: yup.object({
+      fullName: yup
+        .string("Enter your fullName")
+        .required("fullName is required"),
+      email: yup
+        .string("Enter your email")
+        .email("Enter a valid email")
+        .required("Email is required"),
+      password: yup
+        .string("Enter your password")
+        .min(4, "Password should be of minimum 4 characters length")
+        .required("Password is required"),
+      address: yup
+        .string("Enter your address")
 
-    //     .required("address is required"),
-    //   contactNo: yup
-    //     .string("Enter your number")
+        .required("address is required"),
+      contactNo: yup
+        .string("Enter your number")
 
-    //     .required("number is required"),
-    // }),
+        .required("number is required"),
+    }),
 
     onSubmit: async (values) => {
-      axios({
-        method: "post",
-        url: `${state.baseUrl}/signup`,
+      console.log("🚀 ~ values", values);
+      try {
+        let updated = await axios.put(
+          `${state.baseUrl}/profile/${state?.user?.data?._id}`,
 
-        data: {
-          fullName: values.fullName,
-          email: values.email,
-          password: values.password,
-          address: values.address,
-          contactNo: values.contactNo,
-        },
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((res) => {
-          alert("upload Success");
-          setToggleRefresh(!toggleRefresh);
-          //   navigate("/Otp", { state: { email: values.email } });
-        })
-        .catch((err) => {
-          alert("upload Error");
-          console.log("ERROR", err);
+          {
+            email: values?.email,
+            password: values?.password,
+            fullName: values?.fullName,
+            contactNo: values?.contactNo,
+            address: values?.address,
+          },
+
+          {
+            withCredentials: true,
+          }
+        );
+        toast.success("Profile Updated", {
+          position: toast.POSITION.TOP_CENTER,
         });
+        console.log("🚀 ~ updated", updated.data);
+        navigate("/");
+      } catch (e) {
+        toast.error("Profile Updated Error", {
+          position: toast.POSITION.TOP_CENTER,
+        });
+        console.log("Error in api call: ", e);
+      }
     },
   });
   return (
@@ -102,11 +109,11 @@ const UserProfile = () => {
               >
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
+                    <h5>Email Address</h5>
                     <TextField
                       fullWidth
                       id="email"
                       name="email"
-                      label="Email Address"
                       type="email"
                       value={formik.values.email}
                       onChange={formik.handleChange}
@@ -116,11 +123,11 @@ const UserProfile = () => {
                     <div className="errorMessage">{formik.errors.email}</div>
                   ) : null}
                   <Grid item xs={12}>
+                    <h5>Password</h5>
                     <TextField
                       fullWidth
                       id="password"
                       name="password"
-                      label="Password"
                       type="password"
                       value={formik.values.password}
                       onChange={formik.handleChange}
@@ -130,11 +137,11 @@ const UserProfile = () => {
                     <div className="errorMessage">{formik.errors.password}</div>
                   ) : null}
                   <Grid item xs={12}>
+                    <h5>User Name</h5>
                     <TextField
                       fullWidth
                       id="fullName"
                       name="fullName"
-                      label="User Name"
                       type="text"
                       value={formik.values.fullName}
                       onChange={formik.handleChange}
@@ -145,11 +152,11 @@ const UserProfile = () => {
                   ) : null}
 
                   <Grid item xs={12}>
+                    <h5>User Contact No</h5>
                     <TextField
                       fullWidth
                       id="contactNo"
                       name="contactNo"
-                      label="User Contact No"
                       type="number"
                       value={formik.values.contactNo}
                       onChange={formik.handleChange}
@@ -161,11 +168,11 @@ const UserProfile = () => {
                     ) : null}
                   </Grid>
                   <Grid item xs={12}>
+                    <h5>User Address</h5>
                     <TextField
                       fullWidth
                       id="address"
                       name="address"
-                      label="User Address"
                       value={formik.values.address}
                       onChange={formik.handleChange}
                     />
