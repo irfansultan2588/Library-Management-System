@@ -54,8 +54,7 @@ const librarySchema = new mongoose.Schema({
 });
 const libraryModel = mongoose.model("library", librarySchema);
 
-///////////////category schema//////////
-
+///////////////category schema//////////////
 const categorySchema = new mongoose.Schema({
   categoryName: { type: String, required: true },
   status: { type: Boolean, default: true },
